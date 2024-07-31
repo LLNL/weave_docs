@@ -1,0 +1,78 @@
+site_name: Workflow Enablement and AdVanced Environments (WEAVE)
+
+use_directory_urls: false
+site_dir: weave
+
+nav:
+  - General:
+    - Overview: index.md
+    - Tools: tools.md
+  - Tutorials:
+    - A typical workflow: diagram.md
+    # CZ Tutorials
+    # RZ Tutorials
+    # SCF Tutorials
+
+theme:
+  name: readthedocs
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - toc.integrate
+  palette:
+    - scheme: slate
+      primary: black
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+
+
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+
+  # Admonition Support (notes, warnings, etc.)
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+  # Code Specific Color Highlights
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+
+  # LaTeX
+  - pymdownx.arithmatex:
+      generic: true
+
+  # Mermaid Diagrams
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_div_format
+
+
+extra_javascript:
+  # LaTeX
+  - javascripts/mathjax/es5/tex-chtml.js
+
+  # Mermaid Diagrams
+  - javascripts/mermaid_diagrams/node_modules/mermaid/dist/mermaid.min.js
+
+  # Additional Custom JavaScript
+  - javascripts/custom_js/custom.js
+  - javascripts/clipboard/dist/clipboard.min.js
+
+extra_css:
+  # Additional Custom CSS
+  - css/custom_css/custom.css
