@@ -7,8 +7,22 @@ nav:
   - General:
     - Overview: index.md
     - Tools: tools.md
+    # LLNL Specific
   - Tutorials:
     - A typical workflow: diagram.md
+    # Public Tutorials
+    - Public:
+      - Ball Bounce:
+        - Simple Simulation: tutorials/Public/bouncing_ball/1_simple_simulation.md
+      - Ball Bounce VVUQ:
+        - Baseline: tutorials/Public/bouncing_ball_vvuq/1_baseline_simulation.md
+        - Uncertainty bounds: tutorials/Public/bouncing_ball_vvuq/2_uncertainty_bounds.md
+        - Simulation: tutorials/Public/bouncing_ball_vvuq/3_simulation_ensembles.md
+        - Data Management: tutorials/Public/bouncing_ball_vvuq/4_manage_data.md
+        - Post-Processing: tutorials/Public/bouncing_ball_vvuq/5_post-process_data.md
+        - Surrogate Model: tutorials/Public/bouncing_ball_vvuq/6_surrogate_model.md
+      - Ball Bounce LSTM RNN:
+        - LSTM RNN: tutorials/Public/bouncing_ball_lstm/1_lstm_rnn.md
     # CZ Tutorials
     # RZ Tutorials
     # SCF Tutorials
