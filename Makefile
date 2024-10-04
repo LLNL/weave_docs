@@ -45,11 +45,8 @@ define pull_weave_docs_tutorials
 	else \
 		echo "else...1"; \
 		if [ "$(SOURCE_ZONE)" == RZ ]; then \
-			git remote add origin $(CZ_GITLAB)/$(CI_PROJECT_PATH).git; \
 			git remote add origin $(RZ_GITLAB)/$(CI_PROJECT_PATH).git; \
 		else \
-			git remote add origin $(CZ_GITLAB)/$(CI_PROJECT_PATH).git; \
-			git remote add origin $(RZ_GITLAB)/$(CI_PROJECT_PATH).git; \
 			git remote add origin $(SCF_GITLAB)/$(CI_PROJECT_PATH).git; \
 		fi \
 	fi
