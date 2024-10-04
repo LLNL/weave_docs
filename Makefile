@@ -62,11 +62,8 @@ define pull_weave_docs_tutorials
 		git merge $(SOURCE_ZONE)_$(CI_COMMIT_BRANCH) -m "merge $(SOURCE_ZONE)_$(CI_COMMIT_BRANCH) into $(CI_COMMIT_BRANCH) [ci skip]" --no-ff --allow-unrelated-histories; \
 	else \
 		if [ $(SOURCE_ZONE) == RZ ]; then \
-			git merge CZ_$(CI_COMMIT_BRANCH) -m "merge CZ_$(CI_COMMIT_BRANCH) into $(CI_COMMIT_BRANCH) [ci skip]" --no-ff --allow-unrelated-histories; \
 			git merge RZ_$(CI_COMMIT_BRANCH) -m "merge RZ_$(CI_COMMIT_BRANCH) into $(CI_COMMIT_BRANCH) [ci skip]" --no-ff --allow-unrelated-histories; \
 		else \
-			git merge CZ_$(CI_COMMIT_BRANCH) -m "merge CZ_$(CI_COMMIT_BRANCH) into $(CI_COMMIT_BRANCH) [ci skip]" --no-ff --allow-unrelated-histories; \
-			git merge RZ_$(CI_COMMIT_BRANCH) -m "merge RZ_$(CI_COMMIT_BRANCH) into $(CI_COMMIT_BRANCH) [ci skip]" --no-ff --allow-unrelated-histories; \
 			git merge SCF_$(CI_COMMIT_BRANCH) -m "merge SCF_$(CI_COMMIT_BRANCH) into $(CI_COMMIT_BRANCH) [ci skip]" --no-ff --allow-unrelated-histories; \
 		fi \
 	fi
