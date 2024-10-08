@@ -9,9 +9,9 @@ nav:
     - Tools: tools.md
     # LLNL Specific
   - Tutorials:
-    - A typical workflow: diagram.md
     # Public Tutorials
     - Public:
+      - A Typical Workflow: diagram.md
       - Ball Bounce:
         - Simple Simulation: tutorials/Public/bouncing_ball/1_simple_simulation.md
       - Ball Bounce VVUQ:
