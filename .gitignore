@@ -1,0 +1,10 @@
+.DS_Store
+.ipynb_checkpoints
+docs/tutorials/weave_demos_venv/
+docs/tutorials/Public/bouncing_ball/output
+docs/tutorials/Public/bouncing_ball_vvuq/data
+docs/tutorials/Public/bouncing_ball_lstm/images
+ball-bounce-lstm_*
+__pycache__/
+*.sqlite
+*.hdf5
