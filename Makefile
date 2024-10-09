@@ -28,8 +28,8 @@ endef
 
 
 define pull_weave_docs_tutorials
-	pwd
 	echo "...CI in $(SOURCE_ZONE)...${GITLAB_USER_EMAIL} ... ${USER}"
+	cat mkdocs.yml
 	git config --global user.email "${GITLAB_USER_EMAIL}"
 	git config --global user.name "${GITLAB_USER_NAME}"
 	# Merge $(CI_COMMIT_BRANCH) into RZ_$(CI_COMMIT_BRANCH) or SCF_$(CI_COMMIT_BRANCH)
@@ -50,6 +50,8 @@ define pull_weave_docs_tutorials
 			git remote add origin $(SCF_GITLAB)/$(CI_PROJECT_PATH).git; \
 		fi \
 	fi
+	echo "#### after merging develop to $(SOURCE_ZONE)_$(CI_COMMIT_BRANCH)"
+	cat mkdocs.yml
 	git push origin HEAD:$(SOURCE_ZONE)_$(CI_COMMIT_BRANCH)
 	# Merge CZ_$(CI_COMMIT_BRANCH) or RZ_$(CI_COMMIT_BRANCH)/SCF_$(CI_COMMIT_BRANCH) into $(CI_COMMIT_BRANCH)
 	# but DO NOT commit and push... merge only for building the docs.
