@@ -2,7 +2,7 @@
 
 This is a repository for demos of WEAVE functionality. Demo subdirectories contain more information (including instructions) for each.
 
-## CZ
+## Public
 
 ### Ball Bounce
 
@@ -16,9 +16,7 @@ An extension of the Ball Bounce demo that generates ensembles of runs in order t
 
 An extension of the Ball Bounce demo that generates ensembles of runs in order to train a Long Short-Term Memory (LSTM) Recurrent Neural Network (RNN) to predict the transient path of the bouncing ball. It uses the Kosh `threadsafe()` methods to safely call the Kosh store in parallel so that the parallel writes to the Kosh store don't block one another.
 
-### Encore Optimization
-
-An Encore Workflow that uses SciPy to optimize a single Quantity of Interest with a single parameter or multiple parameters. The workflow has been generalized such that a user can pass in their own simulation.
+## CZ
 
 ## RZ
 
