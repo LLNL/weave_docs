@@ -57,7 +57,7 @@ WEAVE_WWW_DIR = /usr/global/web-pages/lc/www/weave
 #else
 #	DOCS_DIR = $(WEAVE_WWW_DIR)/dev
 #endif
-DOCS_DIR = $(WEAVE_WWW_DIR)/dev
+DOCS_DIR = $(WEAVE_WWW_DIR)
 
 BUILD_DOCS = weave_ci/utils/build_docs.py
 VARS_JSON = --vars_json weave_ci/weave_tools/vars.json
