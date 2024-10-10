@@ -3,7 +3,7 @@ SHELL := /bin/bash
 #
 # for command line testing, set the following:
 # ZONE, SOURCE_ZONE, CI_COMMIT_BRANCH
-DOCS_DIR = $(WEAVE_WWW_DIR)/dev
+## TEMPORARY
 #ZONE = CZ
 #SOURCE_ZONE = CZ
 #CI_COMMIT_BRANCH = develop
@@ -57,7 +57,7 @@ WEAVE_WWW_DIR = /usr/global/web-pages/lc/www/weave
 #else
 #	DOCS_DIR = $(WEAVE_WWW_DIR)/dev
 #endif
-DOCS_DIR = $(WEAVE_WWW_DIR)
+DOCS_DIR = $(WEAVE_WWW_DIR)/dev
 
 BUILD_DOCS = weave_ci/utils/build_docs.py
 VARS_JSON = --vars_json weave_ci/weave_tools/vars.json
