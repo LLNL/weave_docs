@@ -3,7 +3,7 @@ SHELL := /bin/bash
 #
 # for command line testing, set the following:
 # ZONE, SOURCE_ZONE, CI_COMMIT_BRANCH
-## TEMPORARY
+DOCS_DIR = $(WEAVE_WWW_DIR)/dev
 #ZONE = CZ
 #SOURCE_ZONE = CZ
 #CI_COMMIT_BRANCH = develop
