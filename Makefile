@@ -83,8 +83,8 @@ define patch_files_and_build_docs
 	cat mkdocs.yml
 	source $(DEPLOY_PATH)/$(latest_symlink)/bin/activate && \
 	mkdocs build && \
-	mkdir -p $(BUILD_DOCS_DIR)/weave && \
-	ls weave && cp -r weave $(BUILD_DOCS_DIR)/
+	mkdir -p build_docs_dir/weave && \
+	ls weave && cp -r weave build_docs_dir/
 endef
 
 define patch_mkdocs_yml
@@ -94,8 +94,8 @@ endef
 pull_weave_docs_tutorials_PREV:
 	$(call pull_weave_docs_tutorials)
 
-setup:
-	pwd
+setup:	
+	mkdir -p build_docs_dir
 	git clone -b develop $(WEAVE_CI_URL)
 	ls -l weave_ci
 
@@ -120,17 +120,6 @@ build_sina_docs:
 build_trata_docs:
 	$(call build_docs,trata)
 
-build_weave_docs_PREV:
-	$(call pull_weave_docs_tutorials)
-	$(call copy_mds)
-	$(call patch_mds)
-	$(call patch_mkdocs_yml)
-	cat mkdocs.yml
-	source $(DEPLOY_PATH)/$(latest_symlink)/bin/activate && \
-	mkdocs build && \
-	mkdir -p $(BUILD_DOCS_DIR)/weave && \
-	ls weave && cp -r weave $(BUILD_DOCS_DIR)/
-
 build_weave_docs_for_push_to_zone_feature:
 	$(call merge_for_push_to_zone_feature)
 	$(call patch_files_and_build_docs)
@@ -148,12 +137,14 @@ build_weave_docs_for_push_to_target:
 	$(call patch_files_and_build_docs)
 
 deploy_docs:
-	cp -pr $(BUILD_DOCS_DIR)/Sina $(DOCS_DIR)
-	cp -pr $(BUILD_DOCS_DIR)/maestrowf $(DOCS_DIR)
-	cp -pr $(BUILD_DOCS_DIR)/pydv $(DOCS_DIR)
-	cp -pr $(BUILD_DOCS_DIR)/kosh $(DOCS_DIR)
-	cp -pr $(BUILD_DOCS_DIR)/merlin $(DOCS_DIR)
-	cp -pr $(BUILD_DOCS_DIR)/trata $(DOCS_DIR)
-	cp -pr $(BUILD_DOCS_DIR)/ibis $(DOCS_DIR)
-	cp -pr $(BUILD_DOCS_DIR)/weave/* $(DOCS_DIR)
+	mkdir -p $(DOCS_DIR)
+	cp -pr build_docs_dir/Sina $(DOCS_DIR)
+	cp -pr build_docs_dir/maestrowf $(DOCS_DIR)
+	cp -pr build_docs_dir/pydv $(DOCS_DIR)
+	cp -pr build_docs_dir/kosh $(DOCS_DIR)
+	cp -pr build_docs_dir/merlin $(DOCS_DIR)
+	cp -pr build_docs_dir/trata $(DOCS_DIR)
+	cp -pr build_docs_dir/ibis $(DOCS_DIR)
+	cp -pr build_docs_dir/weave/* $(DOCS_DIR)
+	rm -rf build_docs_dir
 	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)

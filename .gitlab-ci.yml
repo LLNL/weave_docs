@@ -185,6 +185,7 @@ setup_cz:
     paths:
       - docs
       - weave_ci
+      - build_docs_dir
 
 build_ibis_docs_cz:
   needs: [ setup_cz ]
@@ -193,30 +194,49 @@ build_ibis_docs_cz:
     paths:
       - docs
       - weave_ci
+      - build_docs_dir/ibis
     
 build_kosh_docs_cz:
   needs: [ setup_cz ]
   extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_kosh_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/kosh
 
 build_maestrowf_docs_cz:
   needs: [ setup_cz ]
   extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_maestrowf_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/maestrowf
 
 build_merlin_docs_cz:
   needs: [ setup_cz ]
   extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_merlin_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/merlin
 
 build_pydv_docs_cz:
   needs: [ setup_cz ]
   extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_pydv_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/pydv
 
 build_sina_docs_cz:
   needs: [ setup_cz ]
   extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_sina_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/Sina
 
 build_trata_docs_cz:
   needs: [ setup_cz ]
   extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_trata_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/trata
 
 build_weave_docs_push_to_zone_develop_feature_cz:
   needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
@@ -224,6 +244,7 @@ build_weave_docs_push_to_zone_develop_feature_cz:
   artifacts:
     paths:
       - docs
+      - build_docs_dir
 
 build_weave_docs_push_to_zone_develop_cz:
   needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
@@ -231,6 +252,7 @@ build_weave_docs_push_to_zone_develop_cz:
   artifacts:
     paths:
       - docs
+      - build_docs_dir
 
 build_weave_docs_push_to_develop_feature_cz:
   needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
@@ -238,6 +260,7 @@ build_weave_docs_push_to_develop_feature_cz:
   artifacts:
     paths:
       - docs
+      - build_docs_dir
 
 build_weave_docs_push_to_develop_cz:
   needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
@@ -245,6 +268,7 @@ build_weave_docs_push_to_develop_cz:
   artifacts:
     paths:
       - docs
+      - build_docs_dir
 
 deploy_docs_cz:
   needs:
@@ -267,6 +291,7 @@ setup_rz:
     paths:
       - docs
       - weave_ci
+      - build_docs_dir
 
 build_ibis_docs_rz:
   needs: [ setup_rz ]
@@ -275,30 +300,49 @@ build_ibis_docs_rz:
     paths:
       - docs
       - weave_ci
+      - build_docs_dir/ibis
     
 build_kosh_docs_rz:
   needs: [ setup_rz ]
   extends: [ .on_blueos3_gpu_rz, .run_on_rz, .build_kosh_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/kosh
 
 build_maestrowf_docs_rz:
   needs: [ setup_rz ]
   extends: [ .on_blueos3_gpu_rz, .run_on_rz, .build_maestrowf_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/maestrowf
 
 build_merlin_docs_rz:
   needs: [ setup_rz ]
   extends: [ .on_blueos3_gpu_rz, .run_on_rz, .build_merlin_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/merlin
 
 build_pydv_docs_rz:
   needs: [ setup_rz ]
   extends: [ .on_blueos3_gpu_rz, .run_on_rz, .build_pydv_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/pydv
 
 build_sina_docs_rz:
   needs: [ setup_rz ]
   extends: [ .on_blueos3_gpu_rz, .run_on_rz, .build_sina_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/Sina
 
 build_trata_docs_rz:
   needs: [ setup_rz ]
   extends: [ .on_blueos3_gpu_rz, .run_on_rz, .build_trata_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/trata
 
 build_weave_docs_push_to_zone_develop_feature_rz:
   needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
@@ -306,6 +350,7 @@ build_weave_docs_push_to_zone_develop_feature_rz:
   artifacts:
     paths:
       - docs
+      - build_docs_dir
 
 build_weave_docs_push_to_zone_develop_rz:
   needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
@@ -313,6 +358,7 @@ build_weave_docs_push_to_zone_develop_rz:
   artifacts:
     paths:
       - docs
+      - build_docs_dir
 
 build_weave_docs_push_to_develop_feature_rz:
   needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
@@ -320,6 +366,7 @@ build_weave_docs_push_to_develop_feature_rz:
   artifacts:
     paths:
       - docs
+      - build_docs_dir
 
 build_weave_docs_push_to_develop_rz:
   needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
@@ -327,6 +374,7 @@ build_weave_docs_push_to_develop_rz:
   artifacts:
     paths:
       - docs
+      - build_docs_dir
 
 deploy_docs_rz:
   needs:
@@ -350,6 +398,7 @@ setup_scf:
     paths:
       - docs
       - weave_ci
+      - build_docs_dir
 
 build_ibis_docs_scf:
   needs: [ setup_scf ]
@@ -358,30 +407,49 @@ build_ibis_docs_scf:
     paths:
       - docs
       - weave_ci
+      - build_docs_dir/ibis
     
 build_kosh_docs_scf:
   needs: [ setup_scf ]
   extends: [ .on_blueos3_gpu_scf, .run_on_scf, .build_kosh_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/kosh
 
 build_maestrowf_docs_scf:
   needs: [ setup_scf ]
   extends: [ .on_blueos3_gpu_scf, .run_on_scf, .build_maestrowf_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/maestrowf
 
 build_merlin_docs_scf:
   needs: [ setup_scf ]
   extends: [ .on_blueos3_gpu_scf, .run_on_scf, .build_merlin_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/merlin
 
 build_pydv_docs_scf:
   needs: [ setup_scf ]
   extends: [ .on_blueos3_gpu_scf, .run_on_scf, .build_pydv_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/pydv
 
 build_sina_docs_scf:
   needs: [ setup_scf ]
   extends: [ .on_blueos3_gpu_scf, .run_on_scf, .build_sina_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/Sina
 
 build_trata_docs_scf:
   needs: [ setup_scf ]
   extends: [ .on_blueos3_gpu_scf, .run_on_scf, .build_trata_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/trata
 
 build_weave_docs_push_to_zone_develop_feature_scf:
   needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
@@ -389,6 +457,7 @@ build_weave_docs_push_to_zone_develop_feature_scf:
   artifacts:
     paths:
       - docs
+      - build_docs_dir
 
 build_weave_docs_push_to_zone_develop_scf:
   needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
@@ -396,6 +465,7 @@ build_weave_docs_push_to_zone_develop_scf:
   artifacts:
     paths:
       - docs
+      - build_docs_dir
 
 build_weave_docs_push_to_develop_feature_scf:
   needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
@@ -403,6 +473,7 @@ build_weave_docs_push_to_develop_feature_scf:
   artifacts:
     paths:
       - docs
+      - build_docs_dir
 
 build_weave_docs_push_to_develop_scf:
   needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
@@ -410,6 +481,7 @@ build_weave_docs_push_to_develop_scf:
   artifacts:
     paths:
       - docs
+      - build_docs_dir
 
 deploy_docs_scf:
   needs:
