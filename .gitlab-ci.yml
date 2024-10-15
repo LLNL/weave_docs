@@ -9,10 +9,10 @@ stages:
   - build_weave_docs
   - deploy
 
-.on_blueos3_gpu_cz:
+.on_toss4_cpu_cz:
   tags:
     - shell
-    - lassen
+    - dane
 
 .on_blueos3_gpu_rz:
   variables:
@@ -37,6 +37,79 @@ stages:
 .run_on_scf:
   rules:
     - if: $SOURCE_ZONE == "SCF" && $CI_PIPELINE_SOURCE != "merge_request_event"    
+
+.merge_for_push_to_zone_develop_feature_cz:
+  rules:
+    - if: $SOURCE_ZONE == "CZ" && $CI_COMMIT_BRANCH =~ /^CZ_develop-feature-*/
+      when: always
+    - when: never
+
+.merge_for_push_to_zone_develop_cz:
+  rules:
+    - if: $SOURCE_ZONE == "CZ" && $CI_COMMIT_BRANCH == "CZ_develop"
+      when: always
+    - when: never
+
+.merge_for_push_to_develop_cz:
+  rules:
+    - if: $SOURCE_ZONE == "CZ" && $CI_COMMIT_BRANCH == "develop"
+      when: always
+    - when: never
+
+.merge_for_push_to_develop_feature_cz:
+  rules:
+    - if: $SOURCE_ZONE == "CZ" && $CI_COMMIT_BRANCH =~ /^develop-feature-/
+      when: always
+    - when: never
+
+.merge_for_push_to_zone_develop_feature_rz:
+  rules:
+    - if: $SOURCE_ZONE == "RZ" && $CI_COMMIT_BRANCH =~ /^RZ_develop-feature-*/
+      when: always
+    - when: never
+
+.merge_for_push_to_zone_develop_rz:
+  rules:
+    - if: $SOURCE_ZONE == "RZ" && $CI_COMMIT_BRANCH == "RZ_develop"
+      when: always
+    - when: never
+
+.merge_for_push_to_develop_rz:
+  rules:
+    - if: $SOURCE_ZONE == "RZ" && $CI_COMMIT_BRANCH == "develop"
+      when: always
+    - when: never
+
+.merge_for_push_to_develop_feature_rz:
+  rules:
+    - if: $SOURCE_ZONE == "RZ" && $CI_COMMIT_BRANCH =~ /^develop-feature-/
+      when: always
+    - when: never
+
+.merge_for_push_to_zone_develop_feature_scf:
+  rules:
+    - if: $SOURCE_ZONE == "SCF" && $CI_COMMIT_BRANCH =~ /^SCF_develop-feature-*/
+      when: always
+    - when: never
+
+.merge_for_push_to_zone_develop_scf:
+  rules:
+    - if: $SOURCE_ZONE == "SCF" && $CI_COMMIT_BRANCH == "SCF_develop"
+      when: always
+    - when: never
+
+.merge_for_push_to_develop_scf:
+  rules:
+    - if: $SOURCE_ZONE == "SCF" && $CI_COMMIT_BRANCH == "develop"
+      when: always
+    - when: never
+
+.merge_for_push_to_develop_feature_scf:
+  rules:
+    - if: $SOURCE_ZONE == "SCF" && $CI_COMMIT_BRANCH =~ /^develop-feature-/
+      when: always
+    - when: never
+
 
 .do_setup:
   stage: setup
@@ -78,10 +151,25 @@ stages:
   script:
     - make build_trata_docs
 
-.build_weave_docs:
+.build_weave_docs_push_to_zone_feature:
   stage: build_weave_docs
   script:
-    - make build_weave_docs
+    - make build_weave_docs_for_push_to_zone_feature
+
+.build_weave_docs_push_to_zone:
+  stage: build_weave_docs
+  script:
+    - make build_weave_docs_for_push_to_zone
+
+.build_weave_docs_push_to_target_feature:
+  stage: build_weave_docs
+  script:
+    - make build_weave_docs_for_push_to_target_feature
+
+.build_weave_docs_push_to_target:
+  stage: build_weave_docs
+  script:
+    - make build_weave_docs_for_push_to_target
 
 .deploy:
   stage: deploy
@@ -92,7 +180,7 @@ stages:
 # CZ
 #   
 setup_cz:
-  extends: [ .on_blueos3_gpu_cz, .run_on_cz, .do_setup ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .do_setup ]
   artifacts:
     paths:
       - docs
@@ -100,7 +188,7 @@ setup_cz:
 
 build_ibis_docs_cz:
   needs: [ setup_cz ]
-  extends: [ .on_blueos3_gpu_cz, .run_on_cz, .build_ibis_docs ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_ibis_docs ]
   artifacts:
     paths:
       - docs
@@ -108,38 +196,67 @@ build_ibis_docs_cz:
     
 build_kosh_docs_cz:
   needs: [ setup_cz ]
-  extends: [ .on_blueos3_gpu_cz, .run_on_cz, .build_kosh_docs ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_kosh_docs ]
 
 build_maestrowf_docs_cz:
   needs: [ setup_cz ]
-  extends: [ .on_blueos3_gpu_cz, .run_on_cz, .build_maestrowf_docs ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_maestrowf_docs ]
 
 build_merlin_docs_cz:
   needs: [ setup_cz ]
-  extends: [ .on_blueos3_gpu_cz, .run_on_cz, .build_merlin_docs ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_merlin_docs ]
 
 build_pydv_docs_cz:
   needs: [ setup_cz ]
-  extends: [ .on_blueos3_gpu_cz, .run_on_cz, .build_pydv_docs ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_pydv_docs ]
 
 build_sina_docs_cz:
   needs: [ setup_cz ]
-  extends: [ .on_blueos3_gpu_cz, .run_on_cz, .build_sina_docs ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_sina_docs ]
 
 build_trata_docs_cz:
   needs: [ setup_cz ]
-  extends: [ .on_blueos3_gpu_cz, .run_on_cz, .build_trata_docs ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_trata_docs ]
 
-build_weave_docs_cz:
+build_weave_docs_push_to_zone_develop_feature_cz:
   needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
-  extends: [ .on_blueos3_gpu_cz, .run_on_cz, .build_weave_docs ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_zone_develop_feature_cz, .build_weave_docs_push_to_zone_feature ]
+  artifacts:
+    paths:
+      - docs
+
+build_weave_docs_push_to_zone_develop_cz:
+  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_zone_develop_cz, .build_weave_docs_push_to_zone ]
+  artifacts:
+    paths:
+      - docs
+
+build_weave_docs_push_to_develop_feature_cz:
+  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_develop_feature_cz, .build_weave_docs_push_to_target_feature ]
+  artifacts:
+    paths:
+      - docs
+
+build_weave_docs_push_to_develop_cz:
+  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_develop_cz, .build_weave_docs_push_to_target ]
   artifacts:
     paths:
       - docs
 
 deploy_docs_cz:
-  needs: [ build_weave_docs_cz ]
-  extends: [ .on_blueos3_gpu_cz, .run_on_cz, .deploy ]
+  needs:
+    - job: build_weave_docs_push_to_zone_develop_feature_cz
+      optional: true
+    - job: build_weave_docs_push_to_zone_develop_cz
+      optional: true
+    - job: build_weave_docs_push_to_develop_feature_cz
+      optional: true
+    - job: build_weave_docs_push_to_develop_cz
+      optional: true
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .deploy ]
 
 #
 # RZ
@@ -183,16 +300,44 @@ build_trata_docs_rz:
   needs: [ setup_rz ]
   extends: [ .on_blueos3_gpu_rz, .run_on_rz, .build_trata_docs ]
 
-
-build_weave_docs_rz:
+build_weave_docs_push_to_zone_develop_feature_rz:
   needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
-  extends: [ .on_blueos3_gpu_rz, .run_on_rz, .build_weave_docs ]
+  extends: [ .on_blueos3_gpu_rz, .run_on_rz, .merge_for_push_to_zone_develop_feature_rz, .build_weave_docs_push_to_zone_feature ]
   artifacts:
     paths:
       - docs
-    
+
+build_weave_docs_push_to_zone_develop_rz:
+  needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
+  extends: [ .on_blueos3_gpu_rz, .run_on_rz, .merge_for_push_to_zone_develop_rz, .build_weave_docs_push_to_zone ]
+  artifacts:
+    paths:
+      - docs
+
+build_weave_docs_push_to_develop_feature_rz:
+  needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
+  extends: [ .on_blueos3_gpu_rz, .run_on_rz, .merge_for_push_to_develop_feature_rz, .build_weave_docs_push_to_target_feature ]
+  artifacts:
+    paths:
+      - docs
+
+build_weave_docs_push_to_develop_rz:
+  needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
+  extends: [ .on_blueos3_gpu_rz, .run_on_rz, .merge_for_push_to_develop_rz, .build_weave_docs_push_to_target ]
+  artifacts:
+    paths:
+      - docs
+
 deploy_docs_rz:
-  needs: [ build_weave_docs_rz ]
+  needs:
+    - job: build_weave_docs_push_to_zone_develop_feature_rz
+      optional: true
+    - job: build_weave_docs_push_to_zone_develop_rz
+      optional: true
+    - job: build_weave_docs_push_to_develop_feature_rz
+      optional: true
+    - job: build_weave_docs_push_to_develop_rz
+      optional: true
   extends: [ .on_blueos3_gpu_rz, .run_on_rz, .deploy ]
  
 
@@ -238,14 +383,42 @@ build_trata_docs_scf:
   needs: [ setup_scf ]
   extends: [ .on_blueos3_gpu_scf, .run_on_scf, .build_trata_docs ]
 
-build_weave_docs_scf:
+build_weave_docs_push_to_zone_develop_feature_scf:
   needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
-  extends: [ .on_blueos3_gpu_scf, .run_on_scf, .build_weave_docs ]
+  extends: [ .on_blueos3_gpu_scf, .run_on_scf, .merge_for_push_to_zone_develop_feature_scf, .build_weave_docs_push_to_zone_feature ]
   artifacts:
     paths:
       - docs
-    
-deploy_docs_scf:
-  needs: [ build_weave_docs_scf ]
-  extends: [ .on_blueos3_gpu_scf, .run_on_scf, .deploy ]
 
+build_weave_docs_push_to_zone_develop_scf:
+  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
+  extends: [ .on_blueos3_gpu_scf, .run_on_scf, .merge_for_push_to_zone_develop_scf, .build_weave_docs_push_to_zone ]
+  artifacts:
+    paths:
+      - docs
+
+build_weave_docs_push_to_develop_feature_scf:
+  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
+  extends: [ .on_blueos3_gpu_scf, .run_on_scf, .merge_for_push_to_develop_feature_scf, .build_weave_docs_push_to_target_feature ]
+  artifacts:
+    paths:
+      - docs
+
+build_weave_docs_push_to_develop_scf:
+  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
+  extends: [ .on_blueos3_gpu_scf, .run_on_scf, .merge_for_push_to_develop_scf, .build_weave_docs_push_to_target ]
+  artifacts:
+    paths:
+      - docs
+
+deploy_docs_scf:
+  needs:
+    - job: build_weave_docs_push_to_zone_develop_feature_scf
+      optional: true
+    - job: build_weave_docs_push_to_zone_develop_scf
+      optional: true
+    - job: build_weave_docs_push_to_develop_feature_scf
+      optional: true
+    - job: build_weave_docs_push_to_develop_scf
+      optional: true
+  extends: [ .on_blueos3_gpu_scf, .run_on_scf, .deploy ]

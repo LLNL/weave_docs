@@ -26,59 +26,72 @@ define copy_mds
 	cp -r $(VENVS_VERSIONS_ROOT_PATH) docs/llnl/
 endef
 
-
-define pull_weave_docs_tutorials
-	echo "...CI in $(SOURCE_ZONE)...${GITLAB_USER_EMAIL} ... ${USER}"
+define merge_branch_1_to_branch_2
+	echo "### merge $1 to $2 ###"
+	git status
 	cat mkdocs.yml
 	git config --global user.email "${GITLAB_USER_EMAIL}"
 	git config --global user.name "${GITLAB_USER_NAME}"
-	# Merge $(CI_COMMIT_BRANCH) into RZ_$(CI_COMMIT_BRANCH) or SCF_$(CI_COMMIT_BRANCH)
-	# and push it to RZ_$(CI_COMMIT_BRANCH) or SCF_$(CI_COMMIT_BRANCH)
 	git fetch --all
-	git checkout $(SOURCE_ZONE)_$(CI_COMMIT_BRANCH)
-	git pull origin $(SOURCE_ZONE)_$(CI_COMMIT_BRANCH)
-	git merge origin/$(CI_COMMIT_BRANCH) -m "merge $(CI_COMMIT_BRANCH) into $(SOURCE_ZONE)_$(CI_COMMIT_BRANCH) [ci skip]" --no-ff --allow-unrelated-histories
-	git remote rm origin
-	if [ "$(SOURCE_ZONE)" == "CZ" ]; then \
-		echo "DEBUG...git remote add origin $(CZ_GITLAB)/$(CI_PROJECT_PATH).git;"; \
-		git remote add origin $(CZ_GITLAB)/$(CI_PROJECT_PATH).git; \
-	else \
-		echo "else...1"; \
-		if [ "$(SOURCE_ZONE)" == RZ ]; then \
-			git remote add origin $(RZ_GITLAB)/$(CI_PROJECT_PATH).git; \
-		else \
-			git remote add origin $(SCF_GITLAB)/$(CI_PROJECT_PATH).git; \
-		fi \
-	fi
-	echo "#### after merging develop to $(SOURCE_ZONE)_$(CI_COMMIT_BRANCH)"
+	git checkout $2
+	git pull origin $2
+	git merge $1 -m "merge $1 into $2 develop [ci skip]" --no-ff --allow-unrelated-histories
+	echo "#### after merging $1 to $2"
 	cat mkdocs.yml
-	git push origin HEAD:$(SOURCE_ZONE)_$(CI_COMMIT_BRANCH)
-	# Merge CZ_$(CI_COMMIT_BRANCH) or RZ_$(CI_COMMIT_BRANCH)/SCF_$(CI_COMMIT_BRANCH) into $(CI_COMMIT_BRANCH)
-	# but DO NOT commit and push... merge only for building the docs.
+	git remote rm origin
+	git remote add origin $(GITLAB_URL)/$(CI_PROJECT_PATH).git; \
+	if [ "$3" == "push" ]; then \
+		git push origin HEAD:$2; \
+	fi
+endef
+
+define merge_for_push_to_zone_feature
+	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	if [ $(SOURCE_ZONE) == CZ ]; then \
-		git merge $(SOURCE_ZONE)_$(CI_COMMIT_BRANCH) -m "merge $(SOURCE_ZONE)_$(CI_COMMIT_BRANCH) into $(CI_COMMIT_BRANCH) [ci skip]" --no-ff --allow-unrelated-histories; \
-	else \
-		if [ $(SOURCE_ZONE) == RZ ]; then \
-			git merge RZ_$(CI_COMMIT_BRANCH) -m "merge RZ_$(CI_COMMIT_BRANCH) into $(CI_COMMIT_BRANCH) [ci skip]" --no-ff --allow-unrelated-histories; \
-		else \
-			git merge SCF_$(CI_COMMIT_BRANCH) -m "merge SCF_$(CI_COMMIT_BRANCH) into $(CI_COMMIT_BRANCH) [ci skip]" --no-ff --allow-unrelated-histories; \
-		fi \
-	fi
-	git pull origin $(CI_COMMIT_BRANCH)
-	git pull origin $(SOURCE_ZONE)_$(CI_COMMIT_BRANCH)
-	# git remote rm origin
-	ls docs
-	ls docs/tutorials/
+	git rebase $(SOURCE_ZONE)_$(TARGET)
+	git status
+endef
+
+define merge_for_push_to_zone
+	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+endef
+
+define merge_for_push_to_target_feature
+	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+	git status
+	git fetch --all
+	git checkout $(CI_COMMIT_BRANCH)
+	git rebase $(TARGET)
+	git status
+endef
+
+
+define merge_for_push_to_target_branch
+	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+endef
+
+define patch_files_and_build_docs
+	$(call copy_mds)
+	$(call patch_mds)
+	$(call patch_mkdocs_yml)
+	git status
 	cat mkdocs.yml
+	source $(DEPLOY_PATH)/$(latest_symlink)/bin/activate && \
+	mkdocs build && \
+	mkdir -p $(BUILD_DOCS_DIR)/weave && \
+	ls weave && cp -r weave $(BUILD_DOCS_DIR)/
 endef
 
 define patch_mkdocs_yml
 	$(UPDATE_MKDOCS)
 endef
 
-pull_weave_docs_tutorials:
+pull_weave_docs_tutorials_PREV:
 	$(call pull_weave_docs_tutorials)
 
 setup:
@@ -107,7 +120,7 @@ build_sina_docs:
 build_trata_docs:
 	$(call build_docs,trata)
 
-build_weave_docs:
+build_weave_docs_PREV:
 	$(call pull_weave_docs_tutorials)
 	$(call copy_mds)
 	$(call patch_mds)
@@ -117,6 +130,22 @@ build_weave_docs:
 	mkdocs build && \
 	mkdir -p $(BUILD_DOCS_DIR)/weave && \
 	ls weave && cp -r weave $(BUILD_DOCS_DIR)/
+
+build_weave_docs_for_push_to_zone_feature:
+	$(call merge_for_push_to_zone_feature)
+	$(call patch_files_and_build_docs)
+
+build_weave_docs_for_push_to_zone:
+	$(call merge_for_push_to_zone)
+	$(call patch_files_and_build_docs)
+
+build_weave_docs_for_push_to_target_feature:
+	$(call merge_for_push_to_target_feature)
+	$(call patch_files_and_build_docs)
+
+build_weave_docs_for_push_to_target:
+	$(call merge_for_push_to_target_branch)
+	$(call patch_files_and_build_docs)
 
 deploy_docs:
 	cp -pr $(BUILD_DOCS_DIR)/Sina $(DOCS_DIR)

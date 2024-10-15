@@ -48,16 +48,16 @@ PYTHON = python3
 SPACK_CORE_MACHINE_DIR = $(SPACK_CORE_ENV_DIR)/$(SPACK_VERSION)/$(MACHINE)
 REPOS_DIR = $(SPACK_CORE_MACHINE_DIR)/weave_tools/$(tools_dir)
 
+TARGET = develop
 BUILD_DOCS_DIR = /usr/workspace/weave/gitlab/weave_docs
 
 WEAVE_WWW_DIR = /usr/global/web-pages/lc/www/weave
 
-#ifeq ($(CI_COMMIT_BRANCH),main)
-#	DOCS_DIR = $(WEAVE_WWW_DIR)
-#else
-#	DOCS_DIR = $(WEAVE_WWW_DIR)/dev
-#endif
-DOCS_DIR = $(WEAVE_WWW_DIR)
+ifeq ($(CI_COMMIT_BRANCH),develop)
+	DOCS_DIR = $(WEAVE_WWW_DIR)/dev
+else
+	DOCS_DIR = $(WEAVE_WWW_DIR)/dev
+endif
 
 BUILD_DOCS = weave_ci/utils/build_docs.py
 VARS_JSON = --vars_json weave_ci/weave_tools/vars.json
