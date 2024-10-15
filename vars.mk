@@ -53,7 +53,7 @@ TARGET = develop
 
 WEAVE_WWW_DIR = /usr/global/web-pages/lc/www/weave
 
-ifeq ($(CI_COMMIT_BRANCH),develop)
+ifeq ($(CI_COMMIT_BRANCH),$(filter $(CI_COMMIT_BRANCH),develop CZ_develop RZ_develop SCF_develop))
 	DOCS_DIR = $(WEAVE_WWW_DIR)
 else
 	DOCS_DIR = $(WEAVE_WWW_DIR)/dev/$(CI_COMMIT_BRANCH)
