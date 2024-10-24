@@ -27,21 +27,30 @@ define copy_mds
 endef
 
 define merge_branch_1_to_branch_2
-	echo "### merge $1 to $2 ###"
-	git status
-	cat mkdocs.yml
-	git config --global user.email "${GITLAB_USER_EMAIL}"
-	git config --global user.name "${GITLAB_USER_NAME}"
-	git fetch --all
-	git checkout $2
-	git pull origin $2
-	git merge $1 -m "merge $1 into $2 develop [ci skip]" --no-ff --allow-unrelated-histories
-	echo "#### after merging $1 to $2"
-	cat mkdocs.yml
-	git remote rm origin
+	echo "### merge $1 to $2 ###"; \
+	git status; \
+	cat mkdocs.yml; \
+	git config --global user.email "${GITLAB_USER_EMAIL}"; \
+	git config --global user.name "${GITLAB_USER_NAME}"; \
+	git fetch --all; \
+	git checkout $2; \
+	git pull origin $2; \
+	git merge $1 -m "merge $1 into $2 develop [ci skip]" --no-ff --allow-unrelated-histories; \
+	echo "#### after merging $1 to $2"; \
+	cat mkdocs.yml; \
+	git remote rm origin; \
 	git remote add origin $(GITLAB_URL)/$(CI_PROJECT_PATH).git; \
 	if [ "$3" == "push" ]; then \
 		git push origin HEAD:$2; \
+	fi
+endef
+
+define sync_zone_branch
+	if [ $(SOURCE_ZONE) == RZ ]; then \
+		$(call merge_branch_1_to_branch_2,origin/CZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push); \
+	fi
+	if [ $(SOURCE_ZONE) == SCF ]; then \
+		$(call merge_branch_1_to_branch_2,origin/RZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push); \
 	fi
 endef
 
@@ -50,6 +59,7 @@ define merge_for_push_to_zone_feature
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
+	echo "### git rebase $(SOURCE_ZONE)_$(TARGET) ###"
 	git rebase $(SOURCE_ZONE)_$(TARGET)
 	git status
 endef
@@ -69,8 +79,80 @@ define merge_for_push_to_target_feature
 	git status
 endef
 
-
 define merge_for_push_to_target_branch
+	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+endef
+
+#
+# RZ
+#
+
+define merge_for_push_to_zone_feature_rz
+	$(call merge_branch_1_to_branch_2,origin/CZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	git status
+	git fetch --all
+	git checkout $(CI_COMMIT_BRANCH)
+	git rebase $(SOURCE_ZONE)_$(TARGET)
+	git status
+endef
+
+define merge_for_push_to_zone_rz
+	$(call merge_branch_1_to_branch_2,origin/CZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+endef
+
+define merge_for_push_to_target_feature_rz
+	$(call merge_branch_1_to_branch_2,origin/CZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+	git status
+	git fetch --all
+	git checkout $(CI_COMMIT_BRANCH)
+	git rebase $(TARGET)
+	git status
+endef
+
+define merge_for_push_to_target_branch_rz
+	$(call merge_branch_1_to_branch_2,origin/CZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+endef
+
+#
+# SCF
+#
+define merge_for_push_to_zone_feature_scf
+	$(call merge_branch_1_to_branch_2,origin/RZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	git status
+	git fetch --all
+	git checkout $(CI_COMMIT_BRANCH)
+	git rebase $(SOURCE_ZONE)_$(TARGET)
+	git status
+endef
+
+define merge_for_push_to_zone_scf
+	$(call merge_branch_1_to_branch_2,origin/RZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+endef
+
+define merge_for_push_to_target_feature_scf
+	$(call merge_branch_1_to_branch_2,origin/RZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+	git status
+	git fetch --all
+	git checkout $(CI_COMMIT_BRANCH)
+	git rebase $(TARGET)
+	git status
+endef
+
+define merge_for_push_to_target_branch_scf
+	$(call merge_branch_1_to_branch_2,origin/RZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
 	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
 	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
 endef
@@ -90,9 +172,6 @@ endef
 define patch_mkdocs_yml
 	$(UPDATE_MKDOCS)
 endef
-
-pull_weave_docs_tutorials_PREV:
-	$(call pull_weave_docs_tutorials)
 
 setup:	
 	mkdir -p build_docs_dir
@@ -134,6 +213,40 @@ build_weave_docs_for_push_to_target_feature:
 
 build_weave_docs_for_push_to_target:
 	$(call merge_for_push_to_target_branch)
+	$(call patch_files_and_build_docs)
+
+#
+build_weave_docs_for_push_to_zone_feature_rz:
+	$(call merge_for_push_to_zone_feature_rz)
+	$(call patch_files_and_build_docs)
+
+build_weave_docs_for_push_to_zone_rz:
+	$(call merge_for_push_to_zone_rz)
+	$(call patch_files_and_build_docs)
+
+build_weave_docs_for_push_to_target_feature_rz:
+	$(call merge_for_push_to_target_feature_rz)
+	$(call patch_files_and_build_docs)
+
+build_weave_docs_for_push_to_target_rz:
+	$(call merge_for_push_to_target_branch_rz)
+	$(call patch_files_and_build_docs)
+
+#
+build_weave_docs_for_push_to_zone_feature_scf:
+	$(call merge_for_push_to_zone_feature_scf)
+	$(call patch_files_and_build_docs)
+
+build_weave_docs_for_push_to_zone_scf:
+	$(call merge_for_push_to_zone_scf)
+	$(call patch_files_and_build_docs)
+
+build_weave_docs_for_push_to_target_feature_scf:
+	$(call merge_for_push_to_target_feature_scf)
+	$(call patch_files_and_build_docs)
+
+build_weave_docs_for_push_to_target_scf:
+	$(call merge_for_push_to_target_branch_scf)
 	$(call patch_files_and_build_docs)
 
 deploy_docs:
