@@ -4,8 +4,3 @@ This is a repository for demos of WEAVE functionality. Demo subdirectories conta
 
 ## [Public](Public)
 
-## [CZ](CZ)
-
-## [RZ](RZ)
-
-## [SCF](SCF)
