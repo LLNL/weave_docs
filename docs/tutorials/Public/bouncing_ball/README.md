@@ -12,13 +12,13 @@ Visualizations are provided in the included Jupyter notebook.
 
 ## How to run
 
-1. Run `setup.sh` in the top directory to create a virtual environment with all necessary dependencies and install the jupyter kernel.
+1. Run [setup.sh](../setup.sh) in the [Public](..) directory to create a virtual environment with all necessary dependencies and install the jupyter kernel. 
 
-2. Run `source weave_demos_venv/bin/activate` to enter the virtual environment (you can `deactivate` when you've finished the demo to exit it) and `cd` back into this directory.
+2. Activate the environment according to the instructions given at the end of the [setup.sh](../setup.sh) script.
 
 3. Run `maestro run ball_bounce_suite.yaml --pgen pgen.py` to generate the studies, then y to launch. By default, this will run 10 simulations and ingest them all into the database. Once it completes, re-run the maestro command as many times as you like to continue adding runs. It should take around 2 minutes to finish each.
 
-4. Run `jupyter notebook` and open `start_here.ipynb` and `visualization.ipynb` in the resulting browser window to access the visualizations.
+4. Run `jupyter notebook` (or go your local Jupyter server), and open `start_here.ipynb` and `visualization.ipynb` in the resulting browser window to access the visualizations. Make sure you are using the `weave-demos` kernel.
 
 ## Content overview
 
