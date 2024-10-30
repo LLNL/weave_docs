@@ -50,7 +50,7 @@ In this UQ Study we will:
 
 ### Simulation and surrogate model visualization
 
-The plot step of the workflow allows us to see how the inputs for the simulation were
+The plot step of the workflow allows us to see how the inputs for the simulation were generated with Trata. 
 
 It also generates a plot that gives us an idea of the mixing width over time for all simulations. 
 
