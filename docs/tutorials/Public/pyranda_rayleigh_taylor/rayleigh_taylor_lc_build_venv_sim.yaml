@@ -13,7 +13,6 @@ env:
         NPTS: 32                 # Controls the resolution of the simulation
         RANVEL: 0.0              # Random velocity
         NRUNS: 15                # Number of simulation runs
-        NMODELS: 1               # Number of times to train GP models
         PYTHON: /usr/apps/weave/weave-develop-cpu/bin/python3
 
     dependencies:
@@ -65,7 +64,6 @@ study:
           cmd: |
             $(PYTHON) $(RAYLEIGH_TAYLOR_PLOTTER) --name=$(basename $(dirname $(WORKSPACE))) 
                                                  --store $(STORE)
-                                                 --nmodels $(NMODELS)
             
           depends: [post-process-simulation_*]
       
@@ -75,7 +73,6 @@ study:
           cmd: |
             $(PYTHON) $(RAYLEIGH_TAYLOR_BAYESIAN) --name=$(basename $(dirname $(WORKSPACE))) 
                                                   --store $(STORE)
-                                                  --nmodels $(NMODELS)
             
           depends: [post-process-simulation_*]
       

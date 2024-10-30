@@ -18,3 +18,4 @@ pyaml
 pandas
 jinja2
 encorewf
+numpy<2

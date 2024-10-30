@@ -13,7 +13,6 @@ env:
         N_PTS: 32                    # Controls the resolution of the simulation
         RANVEL: 1.0                 # Random velocity
         N_RUNS: 25                   # Number of entries in each parameter set
-        N_MODELS: 1                  # Number of times to train GP models
         N_PROCS: 8                   # Number of processors to use for pyranda sims
         
     dependencies:
@@ -74,7 +73,7 @@ study:
       description: Plots and Prepare for GP
       run:
           cmd: |
-            $(PYTHON) $(RAYLEIGH_TAYLOR_PLOTTER) --name=$(basename $(dirname $(WORKSPACE))) --store $(STORE) --nmodels $(N_MODELS)
+            $(PYTHON) $(RAYLEIGH_TAYLOR_PLOTTER) --name=$(basename $(dirname $(WORKSPACE))) --store $(STORE)
             
           depends: [post-process-simulation_*]
 
@@ -82,7 +81,7 @@ study:
       description: Bayesians
       run:
           cmd: |
-            $(PYTHON) $(RAYLEIGH_TAYLOR_BAYESIAN) --name=$(basename $(dirname $(WORKSPACE))) --store $(STORE) --nmodels $(N_MODELS) --specroot $(SPECROOT)
+            $(PYTHON) $(RAYLEIGH_TAYLOR_BAYESIAN) --name=$(basename $(dirname $(WORKSPACE))) --store $(STORE) --specroot $(SPECROOT)
             
           depends: [plot-all_*]
 

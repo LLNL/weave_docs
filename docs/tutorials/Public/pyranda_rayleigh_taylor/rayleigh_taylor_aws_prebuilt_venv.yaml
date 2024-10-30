@@ -13,7 +13,6 @@ env:
         NPTS: 128               # Controls the resolution of the simulation
         RANVEL: 1.0             # Random velocity
         NRUNS: 15               # Number of simulation runs
-        NMODELS: 1              # Number of times to train GP models
 
         
     dependencies:
@@ -68,7 +67,6 @@ study:
           cmd: |
             $(PYTHON) $(RAYLEIGH_TAYLOR_PLOTTER) --name=$(basename $(dirname $(WORKSPACE))) 
                                                  --store $(STORE)
-                                                 --nmodels $(NMODELS)
             
           depends: [post-process-simulation_*]
       
@@ -78,7 +76,6 @@ study:
           cmd: |
             $(PYTHON) $(RAYLEIGH_TAYLOR_BAYESIAN) --name=$(basename $(dirname $(WORKSPACE))) 
                                                   --store $(STORE)
-                                                  --nmodels $(NMODELS)
             
           depends: [post-process-simulation_*]
       
