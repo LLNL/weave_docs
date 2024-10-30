@@ -14,7 +14,6 @@ env:
         RANVEL: 1.0                 # Random velocity
         N_RUNS: 25                  # Number of entries in each parameter set
         N_SAMPLES: 2                # Number of samples to generate for this study
-        N_MODELS: 1                  # Number of times to train GP models
         N_PROCS: 8                   # Number of processors to use for pyranda sims
         SAMPLE_BOUNDS: "[[0, 1000]]"  # The upper and lower bounds for our samples (seed in this case)
         # PREV_WORKSPACE: " "         # A variable to track the previous workspace for iterative workflows
@@ -80,7 +79,7 @@ study:
       description: Plots and Prepare for GP
       run:
           cmd: |
-            $(PYTHON) $(RAYLEIGH_TAYLOR_PLOTTER) --name=$(basename $(dirname $(WORKSPACE))) --store $(STORE) --nmodels $(N_MODELS)
+            $(PYTHON) $(RAYLEIGH_TAYLOR_PLOTTER) --name=$(basename $(dirname $(WORKSPACE))) --store $(STORE)
             
           depends: [post-process-simulation]
           task_queue: nonsim_queue
@@ -89,7 +88,7 @@ study:
       description: Bayesians
       run:
           cmd: |
-            $(PYTHON) $(RAYLEIGH_TAYLOR_BAYESIAN) --name=$(basename $(dirname $(WORKSPACE))) --store $(STORE) --nmodels $(N_MODELS) --specroot $(SPECROOT)
+            $(PYTHON) $(RAYLEIGH_TAYLOR_BAYESIAN) --name=$(basename $(dirname $(WORKSPACE))) --store $(STORE) --specroot $(SPECROOT)
             
           depends: [plot-all]
           task_queue: nonsim_queue

@@ -15,7 +15,6 @@ env:
         N_RUNS: 15                   # Number of entries in each parameter set
         N_CAND: 10                   # Number of candidate points that adaptive sampling will choose from
         NSAMPLES: 2                 # Number of samples to generate for this study
-        NMODELS: 1                  # Number of times to train GP models
         SAMPLE_BOUNDS: "[[0, 1000]]"  # The upper and lower bounds for our samples (seed in this case)
         PREV_WORKSPACE: "placeholder"         # A variable to track the previous workspace for iterative workflows
         ITER: 1                     # The current iteration number
@@ -72,7 +71,7 @@ study:
       description: Plots and Prepare for GP
       run:
           cmd: |
-            $(PYTHON) $(RAYLEIGH_TAYLOR_PLOTTER) --name=$(basename $(dirname $(WORKSPACE))) --store $(STORE) --nmodels $(NMODELS)
+            $(PYTHON) $(RAYLEIGH_TAYLOR_PLOTTER) --name=$(basename $(dirname $(WORKSPACE))) --store $(STORE)
             
           depends: [post-process-simulation_*]
           task_queue: nonsim_queue
@@ -81,7 +80,7 @@ study:
       description: Bayesians
       run:
           cmd: |
-            $(PYTHON) $(RAYLEIGH_TAYLOR_BAYESIAN) --name=$(basename $(dirname $(WORKSPACE))) --store $(STORE) --nmodels $(NMODELS) --specroot $(SPECROOT)
+            $(PYTHON) $(RAYLEIGH_TAYLOR_BAYESIAN) --name=$(basename $(dirname $(WORKSPACE))) --store $(STORE) --specroot $(SPECROOT)
             
           depends: [plot-all_*]
           task_queue: nonsim_queue
