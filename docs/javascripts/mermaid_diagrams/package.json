@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "mermaid": "^9.3.0"
+    "dompurify": ">=2.5.4",
+    "mermaid": ">=10.9.3"
   }
 }
