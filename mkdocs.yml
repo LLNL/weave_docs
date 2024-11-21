@@ -23,9 +23,15 @@ nav:
         - Surrogate Model: tutorials/Public/bouncing_ball_vvuq/6_surrogate_model.md
       - Ball Bounce LSTM RNN:
         - LSTM RNN: tutorials/Public/bouncing_ball_lstm/1_lstm_rnn.md
+      - Rayleigh-Taylor UQ Study:
+        - Rayleigh Taylor Modeling using pyranda: tutorials/Public/pyranda_rayleigh_taylor/README.md
     # CZ Tutorials
     # RZ Tutorials
     # SCF Tutorials
+  - Communication:
+    - Newsletters:
+      - October 2024: communications/newsletters/WEAVE_Newsletter_001.pdf
+
 
 theme:
   name: readthedocs

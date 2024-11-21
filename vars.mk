@@ -48,16 +48,16 @@ PYTHON = python3
 SPACK_CORE_MACHINE_DIR = $(SPACK_CORE_ENV_DIR)/$(SPACK_VERSION)/$(MACHINE)
 REPOS_DIR = $(SPACK_CORE_MACHINE_DIR)/weave_tools/$(tools_dir)
 
-BUILD_DOCS_DIR = /usr/workspace/weave/gitlab/weave_docs
+TARGET = develop
+#BUILD_DOCS_DIR = /usr/workspace/weave/gitlab/weave_docs
 
 WEAVE_WWW_DIR = /usr/global/web-pages/lc/www/weave
 
-#ifeq ($(CI_COMMIT_BRANCH),main)
-#	DOCS_DIR = $(WEAVE_WWW_DIR)
-#else
-#	DOCS_DIR = $(WEAVE_WWW_DIR)/dev
-#endif
-DOCS_DIR = $(WEAVE_WWW_DIR)
+ifeq ($(CI_COMMIT_BRANCH),$(filter $(CI_COMMIT_BRANCH),develop CZ_develop RZ_develop SCF_develop))
+	DOCS_DIR = $(WEAVE_WWW_DIR)
+else
+	DOCS_DIR = $(WEAVE_WWW_DIR)/dev/$(CI_COMMIT_BRANCH)
+endif
 
 BUILD_DOCS = weave_ci/utils/build_docs.py
 VARS_JSON = --vars_json weave_ci/weave_tools/vars.json
@@ -67,7 +67,7 @@ PLATFORM_OPT = --platform $(PLATFORM)
 ZONE_OPT = --zone $(ZONE)
 WORKDIR = --workdir $(REPOS_DIR)
 
-BUILD_DOCS_DIR_OPT = --build_docs_dir $(BUILD_DOCS_DIR)
+BUILD_DOCS_DIR_OPT = --build_docs_dir `pwd`/build_docs_dir
 SCRIPTS_OPT = $(VARS_JSON) $(WORKDIR) $(ZONE_OPT) $(PLATFORM_OPT)
 
 VENVS_PATH = /usr/gapps/weave/venvs
