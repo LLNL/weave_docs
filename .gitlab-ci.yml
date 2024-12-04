@@ -12,7 +12,7 @@ stages:
 .on_toss4_cpu_cz:
   tags:
     - shell
-    - dane
+    - ruby
 
 .on_toss4_cpu_rz:
   variables:
