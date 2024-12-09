@@ -59,32 +59,23 @@ else
 	DOCS_DIR = $(WEAVE_WWW_DIR)/dev/$(CI_COMMIT_BRANCH)
 endif
 
-BUILD_DOCS = weave_ci/utils/build_docs.py
+#
+# for creating venv
+#
+CREATE_VENV_SCRIPT = /usr/apps/weave/tools/create_venv.sh
+VENV = $(WORKDIR)/weave_docs_venv
+PKGS = sphinx_immaterial
+
+BUILD_DOCS = utils/build_docs.py
 VARS_JSON = --vars_json weave_ci/weave_tools/vars.json
 
 PLATFORM := $(shell echo $(SYS_TYPE) | cut -b 1-6)
 PLATFORM_OPT = --platform $(PLATFORM)
 ZONE_OPT = --zone $(ZONE)
-WORKDIR = --workdir $(REPOS_DIR)
+WORKDIR_OPT = --workdir $(REPOS_DIR)
 
 BUILD_DOCS_DIR_OPT = --build_docs_dir `pwd`/build_docs_dir
-SCRIPTS_OPT = $(VARS_JSON) $(WORKDIR) $(ZONE_OPT) $(PLATFORM_OPT)
-
-VENVS_PATH = /usr/gapps/weave/venvs
-ifdef CI_COMMIT_TAG
-	DEPLOY_PATH = $(VENVS_PATH)/$(MACHINE)/releases
-	commit_tag = $(CI_COMMIT_TAG)
-	latest_symlink = latest
-else
-	commit_tag = none
-	ifeq ($(CI_COMMIT_BRANCH),main)
-		latest_symlink = weave-main
-		DEPLOY_PATH = $(VENVS_PATH)/$(MACHINE)/main
-	else
-		latest_symlink = weave-develop
-		DEPLOY_PATH = $(VENVS_PATH)/$(MACHINE)/develop
-	endif
-endif
+SCRIPTS_OPT = $(VARS_JSON) $(WORKDIR_OPT) $(ZONE_OPT) $(PLATFORM_OPT)
 
 LLNL_DOCS_MDS= tools.md environment.md badging.md
 
