@@ -2,7 +2,7 @@ include vars.mk
 
 define build_docs
 	# arg1: repo_name
-	$(PYTHON) $(BUILD_DOCS) $(SCRIPTS_OPT) $(BUILD_DOCS_DIR_OPT) --venv $(DEPLOY_PATH)/$(latest_symlink) --tool_json weave_ci/weave_tools/$1.json
+	$(PYTHON) $(BUILD_DOCS) $(SCRIPTS_OPT) $(BUILD_DOCS_DIR_OPT) --venv $(VENV) --tool_json weave_ci/weave_tools/$1.json
 endef
 
 
@@ -163,7 +163,7 @@ define patch_files_and_build_docs
 	$(call patch_mkdocs_yml)
 	git status
 	cat mkdocs.yml
-	source $(DEPLOY_PATH)/$(latest_symlink)/bin/activate && \
+	source $(VENV)/bin/activate && \
 	mkdocs build && \
 	mkdir -p build_docs_dir/weave && \
 	ls weave && cp -r weave build_docs_dir/
@@ -173,10 +173,13 @@ define patch_mkdocs_yml
 	$(UPDATE_MKDOCS)
 endef
 
-setup:	
+setup:
 	mkdir -p build_docs_dir
 	git clone -b develop $(WEAVE_CI_URL)
 	ls -l weave_ci
+	rm -rf $(VENV)
+	$(CREATE_VENV_SCRIPT) -v latest-develop -e $(VENV) -p cpu
+	source $(VENV)/bin/activate && pip install $(PKGS) && pip list && deactivate
 
 build_ibis_docs:
 	$(call build_docs,ibis)
