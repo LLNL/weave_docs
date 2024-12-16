@@ -35,9 +35,9 @@ These tools can be split in the following categories:
 
 * **Sina**: [LLNL GitLab](https://lc.llnl.gov/gitlab/siboka/Sina) | [Public GitHub](https://github.com/LLNL/Sina) | [Documentation - Internal](https://lc.llnl.gov/weave/Sina/html/index.html) | [Presentation](https://lc.llnl.gov/confluence/display/WEAV/Sina+WEAVE+ppt)
     * Sina allows codes to store, query, and visualize their data through an easy-to-use Python API. Data that fits its recognized schema can be ingested into one or more supported backends
-    * Sina's API is independent of backend and gives users the benefits of a database without requiring knowledge of one, allowing queries to be expressed in pure Python. Visualizations are also provided through Python--see the examples folder for demo Jupyter notebooks.
-    * Sina is intended especially for use with run metadata, allowing users to easily and efficiently find simulation runs that match some criteria.
-    * Sina's code comes in two parts. The "cpp" component is an API for use in C++ codes that allows them to write data in Sina's recognized format. The remainder of Sina is found in the "python" directory, and includes all the functionality for handling and ingesting data, visualizing it through Jupyter, etc.
+    * Sina's API is independent of backend and gives users the benefits of a database without requiring knowledge of one, allowing queries to be expressed in pure Python. Visualizations are also provided through Python--see the examples folder for demo Jupyter notebooks
+    * Sina is intended especially for use with metadata, allowing users to easily and efficiently find runs of interest within larger sets or ensembles
+    * Sina also provides a C++ library to allow code written in C++ to quickly and easily generate files matching its schema. This code is hosted as part of Axom, and documentation can be found [here](https://axom.readthedocs.io/en/develop/axom/sina/docs/sphinx/index.html)
 
 * ![Kosh Logo](./assets/images/kosh_logo.png){width="100" }: [LLNL GitLab](https://lc.llnl.gov/gitlab/ASCAML/kosh) | [Public GitHub](https://github.com/LLNL/kosh) | [Documentation](https://kosh.readthedocs.io/en/latest/) | [Presentation](https://doellnl-my.sharepoint.com/:p:/g/personal/doutriaux1_llnl_gov/EaSU4SQ1nJZDpVyWLPL8WSUBjlr6f2HIMRUsXfZxUKIArw?e=doGzrc)
     * Kosh allows codes to store, query, share data via an easy-to-use Python API. Kosh lies on top of Sina and as a result can use any database backend supported by Sina.
@@ -83,7 +83,7 @@ Merlin is built on top of Maestro and is geared toward workflows that require 10
 
 #### Sina
 
-Sina allows for integration with the Physics code and dumps their metadata, files produced and curves in a common output format. These files can later be ingested into a catalog. Once in a catalog, Sina provides powerful tools to query its content.
+Sina allows for integration with the simulation codes and can collect metadata, settings, files produced, curves, etc. in a common output format. These files can later be ingested into a catalog, allowing simple, performant, and powerful access via a Python API, and/or handled with a suite of postprocessing utilities. Sina additionally provides rapid and lightweight exploration of data (including interactive visualization) stored in these catalogs or the common output format.
 
 #### Kosh
 
