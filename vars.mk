@@ -64,7 +64,7 @@ endif
 #
 CREATE_VENV_SCRIPT = /usr/apps/weave/tools/create_venv.sh
 VENV = $(WORKDIR)/weave_docs_venv
-PKGS = sphinx_immaterial
+PKGS = sphinx_immaterial termynal
 
 BUILD_DOCS = utils/build_docs.py
 VARS_JSON = --vars_json weave_ci/weave_tools/vars.json
