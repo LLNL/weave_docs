@@ -1,8 +1,5 @@
 # 5. Post-Process Data
 
-!!! danger "Required Repo"
-    This tutorial will use the [Bouncing Ball VVUQ Demo](https://lc.llnl.gov/gitlab/weave/weave_demos/-/tree/main/CZ/ball_bounce_vvuq) which will have matching tutorial steps.
-
 What is the end goal of simulation, what are you trying to show? Now that you have all the data, it can be easy to get lost in the sea of it. In step [1. Baseline Simulation](./1_baseline_simulation.md) we spoke about QoIs and their importance. The end goal of the simulation ensemble is to determine something about the QoIs that were selected beforehand.
 
 ## Workflow
@@ -175,36 +172,36 @@ A notebook can be saved as a Python script by clicking File -> Download as -> Py
 * QoI transient data with uncertainty bounds
     * Plots: Simulation Ensemble mean with uncertainty bounds and experiment data
     * Purpose: If simulations can predict experiment within uncertainty bounds
-    ![QoIs Input Uncertainty](../../../assets/images/CZ/bouncing_ball_vvuq/05_post-process_data/QoIs_u_input.png)
+    ![QoIs Input Uncertainty](../../../assets/images/Public/bouncing_ball_vvuq/05_post-process_data/QoIs_u_input.png)
 * QoI point data violin and box plots
     * Plots: Simulation distribution at a certain time, max/min value, max/min difference with experiment, etc...
     * Purpose: If simulations are within desired/expected range
-    ![QoIs Violin and Box Plots](../../../assets/images/CZ/bouncing_ball_vvuq/05_post-process_data/QoIs_violin_box.png)
+    ![QoIs Violin and Box Plots](../../../assets/images/Public/bouncing_ball_vvuq/05_post-process_data/QoIs_violin_box.png)
 * QoI point data violin and box convergence plots
     * Plots: Same as above but over 1, 2, 4, 8, 16, 32, 64, 128, 256, etc... simulations.
     * Purpose: How distribution converges over simulations to see if number of simulations can be reduced
-    ![QoIs Violin and Box Plots Convergence](../../../assets/images/CZ/bouncing_ball_vvuq/05_post-process_data/QoIs_x_pos_final_violin_box_convergence.png)
+    ![QoIs Violin and Box Plots Convergence](../../../assets/images/Public/bouncing_ball_vvuq/05_post-process_data/QoIs_x_pos_final_violin_box_convergence.png)
 * QoI point data PDF and CDF plots
     * Plots: Different view of the violin and box plots
     * Purpose: If simulations are within desired/expected range
-    ![QoIs PDF and CDF](../../../assets/images/CZ/bouncing_ball_vvuq/05_post-process_data/QoIs_pdf_cdf.png)
+    ![QoIs PDF and CDF](../../../assets/images/Public/bouncing_ball_vvuq/05_post-process_data/QoIs_pdf_cdf.png)
 * QoI point data PDF and CDF convergence plots
     * Plots: Different view of the violin and box convergence plots
     * Purpose: How distribution converges over simulations to see if number of simulations can be reduced
-    ![QoIs PDF Convergence](../../../assets/images/CZ/bouncing_ball_vvuq/05_post-process_data/QoIs_pdf_convergence.png)
-    ![QoIs CDF Convergence](../../../assets/images/CZ/bouncing_ball_vvuq/05_post-process_data/QoIs_cdf_convergence.png)
+    ![QoIs PDF Convergence](../../../assets/images/Public/bouncing_ball_vvuq/05_post-process_data/QoIs_pdf_convergence.png)
+    ![QoIs CDF Convergence](../../../assets/images/Public/bouncing_ball_vvuq/05_post-process_data/QoIs_cdf_convergence.png)
 * QoI point data parameter correlation scatter plots
     * Plots: Matrix of scatter plots for parameter correlation for each QoI point data
     * Purpose: Which parameter has the largest effect on each QoI point data to reduce uncertainty in that parameter in order to reduce uncertainty in the QoI point data
-    ![QoIs Parameter Correlation](../../../assets/images/CZ/bouncing_ball_vvuq/05_post-process_data/QoIs_x_pos_final_correlation.png)
+    ![QoIs Parameter Correlation](../../../assets/images/Public/bouncing_ball_vvuq/05_post-process_data/QoIs_x_pos_final_correlation.png)
 * QoI point data parameter correlation heatmaps
     * Plots: Heatmap of parameter correlation values for each point data, more consolidated version of the scatter plots
     * Purpose: Which parameter has the largest effect on each QoI point data to reduce uncertainty in that parameter in order to reduce uncertainty in the QoI point data
-    ![QoIs Parameter Correlation Heatmap](../../../assets/images/CZ/bouncing_ball_vvuq/05_post-process_data/QoIs_correlation_heatmap.png)
+    ![QoIs Parameter Correlation Heatmap](../../../assets/images/Public/bouncing_ball_vvuq/05_post-process_data/QoIs_correlation_heatmap.png)
 * QoI point data parameter correlation convergence heatmaps
     * Plots: Heatmap of parameter correlation values for each point data over simulations
     * Purpose: How correlation converges over simulations to see if number of simulations can be reduced
-    ![QoIs Parameter Correlation Heatmap Convergence](../../../assets/images/CZ/bouncing_ball_vvuq/05_post-process_data/QoIs_x_pos_final_correlation_heatmap_convergence.png)
+    ![QoIs Parameter Correlation Heatmap Convergence](../../../assets/images/Public/bouncing_ball_vvuq/05_post-process_data/QoIs_x_pos_final_correlation_heatmap_convergence.png)
 * QoI point data parameter Sobol' Indices heatmaps plots
     * Plots: Same as correlation heatmaps but with Sobol' Indices, this is needed if correlation isn't linear
     * Purpose: Which parameter has the largest effect on each QoI point data to reduce uncertainty in that parameter in order to reduce uncertainty in the QoI point data
@@ -223,9 +220,9 @@ $$
 
 Since we don't have $u_{D}$ (due to it not being an actual experiment) we will just average the transient $u_{num}$ and $u_{input}$ and use that as $u_{D}$. Remember that all of these are **one standard deviation** so in the second chart below $\mu \pm 2 \sigma = \mu \pm 2 u_{val}$. We can see that our simulation with our uncertainties encapsulates the experiment so we can start recommending how the system will behave.
 
-![QoIs All Uncertainties](../../../assets/images/CZ/bouncing_ball_vvuq/05_post-process_data/QoIs_u_all.png)
+![QoIs All Uncertainties](../../../assets/images/Public/bouncing_ball_vvuq/05_post-process_data/QoIs_u_all.png)
 
-![QoIs Validation Uncertainty](../../../assets/images/CZ/bouncing_ball_vvuq/05_post-process_data/QoIs_u_val.png)
+![QoIs Validation Uncertainty](../../../assets/images/Public/bouncing_ball_vvuq/05_post-process_data/QoIs_u_val.png)
 
 ## Quantification of Margins and Uncertainties (QMU)
 
@@ -251,4 +248,4 @@ $$
 MF_z = \frac{Req_z - \mu_z}{u_{val_{z}}} = \frac{80 - 60.41}{3.37} = 5.81
 $$
 
-![QoIs QMU](../../../assets/images/CZ/bouncing_ball_vvuq/05_post-process_data/QoIs_QMU.png)
+![QoIs QMU](../../../assets/images/Public/bouncing_ball_vvuq/05_post-process_data/QoIs_QMU.png)

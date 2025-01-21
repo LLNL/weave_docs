@@ -12,10 +12,11 @@ llnl-ibis
 trata
 scikit-learn
 tensorflow
+horovod
 llnl-pydv
 scipy
 pyaml
 pandas
 jinja2
 encorewf
-numpy<2
+numpy

@@ -1,8 +1,5 @@
 # 4. Manage Data
 
-!!! danger "Required Repo"
-    This tutorial will use the [Bouncing Ball VVUQ Demo](https://lc.llnl.gov/gitlab/weave/weave_demos/-/tree/main/CZ/ball_bounce_vvuq) which will have matching tutorial steps.
-
 There is a lot of data to consolidate after all the simuluations are finished. WEAVE has a couple of tools that can do that for you: Sina and Kosh.
 
 ## Workflow

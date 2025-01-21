@@ -1,8 +1,5 @@
 # 6. Surrogate Model
 
-!!! danger "Required Repo"
-    This tutorial will use the [Bouncing Ball VVUQ Demo](https://lc.llnl.gov/gitlab/weave/weave_demos/-/tree/main/CZ/ball_bounce_vvuq) which will have matching tutorial steps.
-
 One can create a surrogate model with all the data from the simulation ensembles. This surrogate model can be used in lieu of running a large amount of simulations in the future which is useful if the simulations take a long time to execute or are resource-intensive.
 
 ## Workflow

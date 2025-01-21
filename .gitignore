@@ -4,7 +4,8 @@ docs/tutorials/weave_demos_venv/
 docs/tutorials/Public/bouncing_ball/output
 docs/tutorials/Public/bouncing_ball_vvuq/data
 docs/tutorials/Public/bouncing_ball_lstm/images
-ball-bounce-lstm_*
+ball-bounce-lstm_[0-9]*
+ball-bounce-transformer_[0-9]*
 __pycache__/
 *.sqlite
 *.hdf5

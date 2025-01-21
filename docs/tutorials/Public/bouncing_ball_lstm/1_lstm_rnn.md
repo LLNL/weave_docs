@@ -1,8 +1,5 @@
 # Ball Bounce Long Short-Term Memory (LSTM) Recurrent Neural Network (RNN)
 
-!!! danger "Required Repo"
-    This tutorial will use the [Bouncing Ball LSTM Demo](https://lc.llnl.gov/gitlab/weave/weave_demos/-/tree/main/CZ/ball_bounce_lstm) which will have matching tutorial steps.
-
 This tutorial is built on top of the [Bounce Ball VVUQ](../bouncing_ball_vvuq/1_baseline_simulation.md) tutorial by creating a Long Short-Term Memory (LSTM) Recurrent Neural Network (RNN) using the data from the simulation ensembles.
 
 ## Overview
@@ -48,4 +45,4 @@ history = lstm_model.fit(X_train_lstm, y_train_lstm,
                         )
 ```
 
-![LSTM Prediction](../../../assets/images/CZ/bouncing_ball_lstm/acyclic_whole_prediction.png)
+![LSTM Prediction](../../../assets/images/Public/bouncing_ball_lstm/acyclic_whole_prediction.png)

@@ -1,8 +1,5 @@
 # 3. Simulation Ensembles
 
-!!! danger "Required Repo"
-    This tutorial will use the [Bouncing Ball VVUQ Demo](https://lc.llnl.gov/gitlab/weave/weave_demos/-/tree/main/CZ/ball_bounce_vvuq) which will have matching tutorial steps.
-
 Once the uncertainty bounds have been determined for our simulation parameters, we can start creating our workflow for our simulation ensembles using one of the [orchestration tools](/tools.md#workflow-orchestration) in WEAVE.
 
 ## How Many Simulations to Run?
