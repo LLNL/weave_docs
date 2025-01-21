@@ -1,8 +1,5 @@
 # 2. Uncertainty Bounds
 
-!!! danger "Required Repo"
-    This tutorial will use the [Bouncing Ball VVUQ Demo](https://lc.llnl.gov/gitlab/weave/weave_demos/-/tree/main/CZ/ball_bounce_vvuq) which will have matching tutorial steps.
-
 The uncertainty bounds for the simulation parameters need to be gathered once the baseline simulation has been determined. Running simulation ensembles need parameters that can be varied with realistic values. Running a simulation with parameter values that won't be encountered for the specific study will provide results that won't be seen and will waste computer resources. In application, conditions of physical systems are constantly changing leading to uncertainty in the true, or exact, values of design parameters. Hence design parameter spaces are used to capture the range of possible values that contain the true value.
 
 ## Simulation Parameters

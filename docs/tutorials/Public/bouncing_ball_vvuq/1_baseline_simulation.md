@@ -1,8 +1,5 @@
 # 1. Baseline Simulation
 
-!!! danger "Required Repo"
-    This tutorial will use the [Bouncing Ball VVUQ Demo](https://lc.llnl.gov/gitlab/weave/weave_demos/-/tree/main/CZ/ball_bounce_vvuq) which will have matching tutorial steps.
-
 Having a baseline simulation isn't necessary for every workflow but if the workflow includes post-processing plans that include any Verification, Validation, and Uncertainty Quantification (VVUQ), it is highly recommended. 
 
 If you don't have validation data you can skip to [2. Uncertainty Bounds](./2_uncertainty_bounds.md) and if you don't want to do VVUQ you can skip to [3. Simulation Ensembles](./3_simulation_ensembles.md). 
@@ -100,7 +97,7 @@ $$
 
 Using Sina, we then plot each QoI validation data using their unique run ID (for example, `run.id = '47bcda_0'`), alongside with their corresponding residuals $diff=x_{true}-x_{pred}$. The figure below depicts the affects on QoIs when adjusting the run parameters slightly. We will use the Jupyter Notebook `visualization_baseline_sina.ipynb` or `visualization_baseline_kosh.ipynb` in `01_baseline_simulation/baseline/` to post-process the data and create the plots below. You will notice that Sina and Kosh have very similar methods since Kosh is built on top of Sina.
 
-![QoIs Baseline](../../../assets/images/CZ/bouncing_ball_vvuq/01_baseline_simulation/QoIs.png)
+![QoIs Baseline](../../../assets/images/Public/bouncing_ball_vvuq/01_baseline_simulation/QoIs.png)
 
 The RMSE for each run is calculated using the formula above and shown in the table below. The RMSE for each QoI is plotted for a quick visualization of the smallest RMSE. Taking the mean of the RMSE accross all the QoIs for each simulation run, we see that `run.id = '47bcda_3'` produces the smallest value and thus we choose the parameters from that run to define our baseline simulation. These parameters will be used as the comparative basis for all other simulations we will conduct moving forward.
 
@@ -111,7 +108,7 @@ The RMSE for each run is calculated using the formula above and shown in the tab
 | 47bcda_2 | 4.12 | 0.03 | 1.42 | 1.86 |
 | 47bcda_3 | 0.2 | 0.11 | 1.43 | 0.58 |
 
-![RMSE Baseline](../../../assets/images/CZ/bouncing_ball_vvuq/01_baseline_simulation/RMSE.png)
+![RMSE Baseline](../../../assets/images/Public/bouncing_ball_vvuq/01_baseline_simulation/RMSE.png)
 
 ## Numerical Resolution Study
 
@@ -134,10 +131,10 @@ The plots showcase how the resolution affects the QoIs. We didn't plot the RMSE 
 
     You have to make sure that you extract the QoIs at the `common` timesteps or else you can't acquire the differences or numerical uncertainty (standard deviation).
 
-![QoIs Numerical Resolution](../../../assets/images/CZ/bouncing_ball_vvuq/01_baseline_simulation/QoIs_num_res.png)
+![QoIs Numerical Resolution](../../../assets/images/Public/bouncing_ball_vvuq/01_baseline_simulation/QoIs_num_res.png)
 
 Here is where we decide if running simulations with a finer resolution is worth the computational cost. The Bouncing Ball Demo using the fine time-step is not computationally expensive so we can run it using the fine time-step. However, if this were a complex high-fidelity physics model, we would opt for the nominal time-step. For the purposes of this tutorial, we will stick with the nominal time-step of `TICKS_PER_SECOND = 20`.
 
 The plots for the numerical uncertainty are below. We can see that as the time-step increases, the variance between simulations also increases.
 
-![QoIs Numerical Uncertainty](../../../assets/images/CZ/bouncing_ball_vvuq/01_baseline_simulation/QoIs_u_num.png)
+![QoIs Numerical Uncertainty](../../../assets/images/Public/bouncing_ball_vvuq/01_baseline_simulation/QoIs_u_num.png)

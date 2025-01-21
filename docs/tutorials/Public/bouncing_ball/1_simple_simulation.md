@@ -1,8 +1,5 @@
 # Ball Bounce Simple Simulation
 
-!!! danger "Required Repo"
-    This tutorial will use the [Bouncing Ball Demo](https://lc.llnl.gov/gitlab/weave/weave_demos/-/tree/main/CZ/ball_bounce) which will have matching tutorial steps.
-
 This tutorial will go over a simple workflow to introduce the user to couple of the WEAVE tools; specifically Maestro, Sina, and Kosh.
 
 ## Start Here Notebook

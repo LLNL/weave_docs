@@ -59,8 +59,8 @@ define merge_for_push_to_zone_feature
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	echo "### git rebase $(SOURCE_ZONE)_$(TARGET) ###"
-	git rebase $(SOURCE_ZONE)_$(TARGET)
+	echo "### git pull origin $(SOURCE_ZONE)_$(TARGET) ###"
+	git pull origin $(SOURCE_ZONE)_$(TARGET)
 	git status
 endef
 
@@ -75,7 +75,7 @@ define merge_for_push_to_target_feature
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	git rebase $(TARGET)
+	git pull origin $(TARGET)
 	git status
 endef
 
@@ -94,7 +94,7 @@ define merge_for_push_to_zone_feature_rz
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	git rebase $(SOURCE_ZONE)_$(TARGET)
+	git pull origin $(SOURCE_ZONE)_$(TARGET)
 	git status
 endef
 
@@ -111,7 +111,7 @@ define merge_for_push_to_target_feature_rz
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	git rebase $(TARGET)
+	git pull origin $(TARGET)
 	git status
 endef
 
@@ -130,7 +130,7 @@ define merge_for_push_to_zone_feature_scf
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	git rebase $(SOURCE_ZONE)_$(TARGET)
+	git pull origin $(SOURCE_ZONE)_$(TARGET)
 	git status
 endef
 
@@ -147,7 +147,7 @@ define merge_for_push_to_target_feature_scf
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	git rebase $(TARGET)
+	git pull origin $(TARGET)
 	git status
 endef
 
