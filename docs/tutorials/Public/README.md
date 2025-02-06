@@ -6,7 +6,7 @@ In this directory you will find tutorials for various WEAVE tools, usually integ
 
 ## Setting up a WEAVE environment
 
-Run [setup.sh] 
+Run [setup.sh](../setup.sh)
 
 ## [Ball Bounce](bouncing_ball)
 
@@ -18,7 +18,15 @@ An extension of the Ball Bounce demo that generates ensembles of runs in order t
 
 ## [Ball Bounce LSTM](bouncing_ball_lstm)
 
-An extension of the Ball Bounce demo that generates ensembles of runs in order to train a Long Short-Term Memory (LSTM) Recurrent Neural Network (RNN) to predict the transient path of the bouncing ball. It uses the Kosh `threadsafe()` methods to safely call the Kosh store in parallel so that the parallel writes to the Kosh store don't block one another.
+An extension of the Ball Bounce demo that generates ensembles of runs in order to train a Long Short-Term Memory (LSTM) Recurrent Neural Network (RNN) to predict the transient path of the bouncing ball. It uses the Kosh threadsafe methods to safely call the Kosh store in parallel so that the parallel writes to the Kosh store don't block one another.
+
+## [Ball Bounce Transformer](bouncing_ball_transformer)
+
+An extension of the Ball Bounce demo that generates ensembles of runs in order to train a Transformer to predict the transient path of the bouncing ball. It uses the Kosh threadsafe methods to safely call the Kosh store in parallel so that the parallel writes to the Kosh store don't block one another.
+
+## [Ball Bounce Metadata Machine Learning](bouncing_ball_metadata_machine_learning)
+
+An extension of the Ball Bounce demo that generates ensembles of runs in order to train a machine learning model on the metadata of each run to predict the final x position of the bouncing ball. It uses the Kosh threadsafe methods to safely call the Kosh store in parallel so that the parallel writes to the Kosh store don't block one another. It uses the Kosh `store.to_dataframe()` method to extract all the metadata from all the runs into a Pandas DataFrame.
 
 ## [Pyranda Rayleigh-Taylor](pyranda_rayleigh_taylor)
 
