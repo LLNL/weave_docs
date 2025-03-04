@@ -1,6 +1,6 @@
 include vars.mk
 
-define build_docs
+define do_build_docs
 	# arg1: repo_name
 	$(PYTHON) $(BUILD_DOCS) $(SCRIPTS_OPT) $(BUILD_DOCS_DIR_OPT) --venv $(VENV) --tool_json weave_ci/weave_tools/$1.json
 endef
@@ -88,25 +88,25 @@ setup: print_env
 	source $(VENV)/bin/activate && pip install $(PKGS) && pip list && deactivate
 
 build_ibis_docs:
-	$(call build_docs,ibis)
+	$(call do_build_docs,ibis)
 
 build_kosh_docs:
-	$(call build_docs,kosh)
+	$(call do_build_docs,kosh)
 
 build_maestrowf_docs:
-	$(call build_docs,maestrowf)
+	$(call do_build_docs,maestrowf)
 
 build_merlin_docs:
-	$(call build_docs,merlin)
+	$(call do_build_docs,merlin)
 
 build_pydv_docs:
-	$(call build_docs,pydv)
+	$(call do_build_docs,pydv)
 
 build_sina_docs:
-	$(call build_docs,Sina)
+	$(call do_build_docs,Sina)
 
 build_trata_docs:
-	$(call build_docs,trata)
+	$(call do_build_docs,trata)
 
 build_docs:
 	$(call patch_files_and_build_docs)
