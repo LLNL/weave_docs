@@ -178,22 +178,26 @@ stages:
 .build_weave_docs_push_to_zone_feature:
   stage: build_weave_docs
   script:
-    - make build_weave_docs_for_push_to_zone_feature
+    - make merge_for_push_to_zone_feature
+    - make build_docs
 
 .build_weave_docs_push_to_zone:
   stage: build_weave_docs
   script:
-    - make build_weave_docs_for_push_to_zone
+    - make merge_for_push_to_zone
+    - make build_docs
 
 .build_weave_docs_push_to_target_feature:
   stage: build_weave_docs
   script:
-    - make build_weave_docs_for_push_to_target_feature
+    - make merge_for_push_to_target_feature
+    - make build_docs
 
 .build_weave_docs_push_to_target:
   stage: build_weave_docs
   script:
-    - make build_weave_docs_for_push_to_target
+    - make merge_for_push_to_target_branch
+    - make build_docs
 
 #
 # RZ
@@ -201,22 +205,26 @@ stages:
 .build_weave_docs_push_to_zone_feature_rz:
   stage: build_weave_docs
   script:
-    - make build_weave_docs_for_push_to_zone_feature_rz
+    - make merge_for_push_to_zone_feature_rz
+    - make build_docs
 
 .build_weave_docs_push_to_zone_rz:
   stage: build_weave_docs
   script:
-    - make build_weave_docs_for_push_to_zone_rz
+    - make merge_for_push_to_zone_rz
+    - make build_docs
 
 .build_weave_docs_push_to_target_feature_rz:
   stage: build_weave_docs
   script:
-    - make build_weave_docs_for_push_to_target_feature_rz
+    - make merge_for_push_to_target_feature_rz
+    - make build_docs
 
 .build_weave_docs_push_to_target_rz:
   stage: build_weave_docs
   script:
-    - make build_weave_docs_for_push_to_target_rz
+    - make merge_for_push_to_target_branch_rz
+    - make build_docs
 
 #
 # SCF
@@ -224,22 +232,26 @@ stages:
 .build_weave_docs_push_to_zone_feature_scf:
   stage: build_weave_docs
   script:
-    - make build_weave_docs_for_push_to_zone_feature_scf
+    - make merge_for_push_to_zone_feature_scf
+    - make build_docs
 
 .build_weave_docs_push_to_zone_scf:
   stage: build_weave_docs
   script:
-    - make build_weave_docs_for_push_to_zone_scf
+    - make merge_for_push_to_zone_scf
+    - make build_docs
 
 .build_weave_docs_push_to_target_feature_scf:
   stage: build_weave_docs
   script:
-    - make build_weave_docs_for_push_to_target_feature_scf
+    - make merge_for_push_to_target_feature_scf
+    - make build_docs
 
 .build_weave_docs_push_to_target_scf:
   stage: build_weave_docs
   script:
-    - make build_weave_docs_for_push_to_target_scf
+    - make merge_for_push_to_target_branch_scf
+    - make build_docs
 
 .deploy:
   stage: deploy
