@@ -232,7 +232,7 @@ stages:
 .build_weave_docs_push_to_zone_feature_scf:
   stage: build_weave_docs
   script:
-	- make merge_for_push_to_zone_feature_scf
+    - make merge_for_push_to_zone_feature_scf
     - make build_docs
 
 .build_weave_docs_push_to_zone_scf:
