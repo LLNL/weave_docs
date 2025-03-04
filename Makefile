@@ -130,7 +130,7 @@ merge_for_push_to_target_feature:
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	git pull origin $(TARGET)
+	git pull origin $(SOURCE_ZONE)_$(TARGET)
 	git status
 
 merge_for_push_to_target_branch:
@@ -162,7 +162,7 @@ merge_for_push_to_target_feature_rz:
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	git pull origin $(TARGET)
+	git pull origin $(SOURCE_ZONE)_$(TARGET)
 	git status
 
 merge_for_push_to_target_branch_rz:
@@ -194,7 +194,7 @@ merge_for_push_to_target_feature_scf:
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	git pull origin $(TARGET)
+	git pull origin $(SOURCE_ZONE)_$(TARGET)
 	git status
 
 merge_for_push_to_target_branch_scf:
