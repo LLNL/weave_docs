@@ -13,7 +13,7 @@ nav:
     - Public:
       - A Typical Workflow: diagram.md
       - Ball Bounce:
-        - Simple Simulation: tutorials/Public/bouncing_ball/1_simple_simulation.md
+        - Simple Simulation: tutorials/Public/bouncing_ball/README.md
       - Ball Bounce VVUQ:
         - Baseline: tutorials/Public/bouncing_ball_vvuq/1_baseline_simulation.md
         - Uncertainty bounds: tutorials/Public/bouncing_ball_vvuq/2_uncertainty_bounds.md
@@ -22,7 +22,11 @@ nav:
         - Post-Processing: tutorials/Public/bouncing_ball_vvuq/5_post-process_data.md
         - Surrogate Model: tutorials/Public/bouncing_ball_vvuq/6_surrogate_model.md
       - Ball Bounce LSTM RNN:
-        - LSTM RNN: tutorials/Public/bouncing_ball_lstm/1_lstm_rnn.md
+        - LSTM RNN: tutorials/Public/bouncing_ball_lstm/README.md
+      - Ball Bounce Transformer:
+        - Transformer: tutorials/Public/bouncing_ball_transformer/README.md
+      - Ball Bounce Metadata Machine Learning:
+        - Metadata Machine Learning: tutorials/Public/bouncing_ball_metadata_machine_learning/README.md
       - Rayleigh-Taylor UQ Study:
         - Rayleigh Taylor Modeling using pyranda: tutorials/Public/pyranda_rayleigh_taylor/README.md
     # CZ Tutorials
@@ -30,8 +34,8 @@ nav:
     # SCF Tutorials
   - Communication:
     - Newsletters:
+      - March 2025: communications/newsletters/WEAVE_Newsletter_002.pdf
       - October 2024: communications/newsletters/WEAVE_Newsletter_001.pdf
-
 
 theme:
   name: readthedocs

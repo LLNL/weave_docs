@@ -1,0 +1,40 @@
+description:
+    name: ball-bounce-metadata-machine-learning
+    description: A workflow that simulates a ball bouncing in a box over several input sets to train a machine learning model.
+
+env:
+    variables:
+        CREATE_STORE_SCRIPT: ./create_store.py
+        SIM_SCRIPT_PATH: ./ball_bounce.py
+        PROCESS_SCRIPT_PATH: ./dsv_to_kosh.py
+        OUTPUT_DS_PATH: ./ensembles_output.sqlite
+        METADATA_MACHINE_LEARNING_SCRIPT_PATH: ./visualization_metadata_machine_learning_kosh.py
+
+study:
+    - name: create_initial_store
+      description: Create the initial store so that the parallel `ingest-ball-bounce` steps don't try to create it at the same time
+      run:
+          cmd: |
+            python $(SPECROOT)/$(CREATE_STORE_SCRIPT) $(OUTPUT_PATH)/$(OUTPUT_DS_PATH)
+
+    - name: run-ball-bounce
+      description: Run a family of simulations of a ball in a box.
+      run:
+          cmd: |
+            python $(SPECROOT)/$(SIM_SCRIPT_PATH) --output output.dsv --xpos $(X_POS_INITIAL) --ypos $(Y_POS_INITIAL) --zpos $(Z_POS_INITIAL) --xvel $(X_VEL_INITIAL) --yvel $(Y_VEL_INITIAL) --zvel $(Z_VEL_INITIAL) --gravity $(GRAVITY) --box_side_length $(BOX_SIDE_LENGTH) --group $(GROUP_ID) --run $(RUN_ID)
+          depends: [create_initial_store]
+
+    - name: ingest-ball-bounce
+      description: Ingest the outputs from the previous step
+      run:
+          cmd: |
+            python $(SPECROOT)/$(PROCESS_SCRIPT_PATH) $(run-ball-bounce.workspace) $(OUTPUT_PATH)/$(OUTPUT_DS_PATH)
+          depends: [run-ball-bounce]
+
+    - name: metadata-machine-learning-ball-bounce
+      description: Create the machine learning model from the simulation data
+      run:
+          cmd: |
+              jupyter nbconvert --to script $(SPECROOT)/*.ipynb
+              python $(SPECROOT)/$(METADATA_MACHINE_LEARNING_SCRIPT_PATH) $(OUTPUT_PATH)
+          depends: [ingest-ball-bounce_*]
