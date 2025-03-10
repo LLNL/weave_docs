@@ -34,8 +34,8 @@ nav:
     # SCF Tutorials
   - Communication:
     - Newsletters:
+      - March 2025: communications/newsletters/WEAVE_Newsletter_002.pdf
       - October 2024: communications/newsletters/WEAVE_Newsletter_001.pdf
-
 
 theme:
   name: readthedocs
