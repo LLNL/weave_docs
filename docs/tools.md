@@ -57,21 +57,21 @@ Multiple WEAVE tools under the same workflow categories can be used to achieve y
 
 <img src=./assets/images/trata_logo.png width="100" alt="Trata Logo">  | [Public Github](https://github.com/llnl/trata) | [Documentation](https://llnl-trata.readthedocs.io/en/latest)
 
-* Trata is a Bayesian sampling package designed to allow users to explore a parameter space by generating sample points.
+* Trata is a sampling package designed to allow users to explore a parameter space by generating sample points, and are easy to utilize in Maestro and Merlin to generate ensembles of simulations. 
 
-* In creating a surrogate model, generating initial training data requires the selection of samples from the design parameter spaces. For instance, if a simulation takes two inputs, x and y, and you want to run a set of simulations with x-values between 5 and 20 and y-values between 0.1 and 1000, the sampling component can generate sample points (in this case (x,y) pairs) for you.
+* Trata provides a common interface to multiple sampling methods including space-filling designs like Latin hypercube or a cartesian cross sampling. Users can also choose statistical model-based designs such as a multi-normal sampler or probability density function sampler which samples from any of scipy's statistical distributions. These space-filling and model-based designs are available in the `sampler` module. Many of these samplers are used by IBIS for sensitivity analysis and uncertainty quantification.
 
-* Once the simulation data is accessible, users can either load their sample data (which Trata can simply read in from a file) or generate samples using various methods. Users specify how many total sample points they want and how they should be chosen.
-
-* Users can parse tab or csv files and create a parameter object that represents discrete, discrete-ordered, or continuous samples. Other file types can also be parsed into parameter objects, but users would need to write their own custom functions in order to do so. Users can also generate samples using various Bayesian methods such as Latin hypercube sampling, quasi-random number sampling, or any of 14 other sampling methods available through Trata.
+* Users can also generate samples sequentially with the `adaptive_sampler` module. After generating an initial set of points, candidate points are ranked according to similarity, model uncertainty, or both. Kosh operators have been provided in the `kosh_sampler` module to conveniently allow users to sequentially sample with data from a Sina catalog. 
 
 <img src=./assets/images/ibis_logo.png width="80" alt="IBIS Logo">  **IBIS** | [Public Github](https://github.com/llnl/ibis) | [Documentation](https://llnl-ibis.readthedocs.io/en/latest)
 
-* LLNL's Interactive Bayesian Inference and Sensitivity, or IBIS, is designed to be used after a number of simulations have run to completion, to predict the results of future simulation runs. IBIS generates statistical models that can be used to predict the results of future simulation runs as well as to perform sensitivity and UQ analyses.
+* Interactive Bayesian Inference and Sensitivity, or IBIS, provides tools for sensitivity analysis and uncertainty quantification (UQ). 
 
-* Assessment of system performance variation induced by uncertain parameter values is referred to as UQ. Typically, the Monte Carlo method is used to perform UQ by assigning probability distributions to uncertain input variables from which to draw samples in order to calculate corresponding output values using surrogate models. Based on the ensemble of output results, the output distribution should statistically describe the output's uncertainty.
+* IBIS's `sensitivity` module provides users a variety of methods to better understand the global sensitivity for an output. Each input can be compared and their influence on the output can be conveniently shown in a score plot, rank plot, or network plot.
 
-* Sensitivity analysis refers to the study of how uncertainty in the output of a mathematical model or system can be attributed to different sources of uncertainty in the inputs. In the data science space, sensitivity analysis is often called feature selection.
+* Uncertainty quantification can be done with IBIS's `mcmc` module. The default MCMC sampler uses Bayesian inference to incorporate knowledge from experiments to better understand input parameters, and provide estimates of uncertainty to model predictions. A discrepancy MCMC sampler allows users to estimate model discrepancy. 
+
+* IBIS also provides Kosh operators to conveniently allow users to perform sensitivity analysis or use MCMC sampling with data saved in a Kosh store.
 
 ## Data Visualization.
 
@@ -112,11 +112,11 @@ Kosh also provides tools to move the data around while preserving the store's in
 
 ### TRATA
 
-Trata is a Bayesian sampling package designed to allow users to explore a parameter space by generating sample points. Once the simulation data is accesssible, users can either load their sample data or generate samples using various sampling methods. Users can parse tab or csv files and create a parameter object that represents discrete, discrete-ordered, or continuous samples. Other file types can also be parsed into parameter objects but users would need to write their own custom functions in order to do so. Users can also generate samples using various Bayesian methods such as Latin Hypercube sampling, Quasi-Random Number sampling, or one of 14 other sampling methods made available through Trata.
+Trata is a sampling package designed to allow users to explore a parameter space by generating sample points, and are easy to utilize in Maestro and Merlin to generate ensembles of simulations.  These can be generated with space-filling or model-informed methods, or sequentially with adaptive sampling. 
 
 ### IBIS
 
-The Interactive Bayesian Inference and Sensitivity (IBIS) tool is designed to allow users to generate statistical models after physics simulations have run to completion. These models can be used to predict the results of future simulation runs, and to perform sensitivity and UQ analyses.
+The Interactive Bayesian Inference and Sensitivity (IBIS) tool is designed to allow users to generate statistical models after physics simulations have run to completion. These models can be used to estimate uncertainty in future simulation runs for UQ analyses, or to perform sensitivity analyses.
 
 ## Data Visualization
 
