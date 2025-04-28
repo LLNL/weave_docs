@@ -108,6 +108,9 @@ build_sina_docs:
 build_trata_docs:
 	$(call do_build_docs,trata)
 
+build_studyweaver_docs:
+	$(call do_build_docs,StudyWeaver)
+
 build_docs:
 	$(call patch_files_and_build_docs)
 
@@ -211,6 +214,7 @@ deploy_docs:
 	cp -pr build_docs_dir/merlin $(DOCS_DIR)
 	cp -pr build_docs_dir/trata $(DOCS_DIR)
 	cp -pr build_docs_dir/ibis $(DOCS_DIR)
+	cp -pr build_docs_dir/StudyWeaver $(DOCS_DIR)
 	cp -pr build_docs_dir/weave/* $(DOCS_DIR)
 	rm -rf build_docs_dir
 	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)
