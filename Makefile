@@ -205,16 +205,31 @@ merge_for_push_to_target_branch_scf:
 	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
 	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
 
+deploy_docs_PREV:
+	mkdir -p $(DOCS_DIR)
+	cp -pr build_docs_dir/Sina $(DOCS_DIR)
+	cp -pr build_docs_dir/maestrowf $(DOCS_DIR)
+	cp -pr build_docs_dir/pydv $(DOCS_DIR)
+	cp -pr build_docs_dir/kosh $(DOCS_DIR)
+	cp -pr build_docs_dir/trata $(DOCS_DIR)
+	cp -pr build_docs_dir/ibis $(DOCS_DIR)
+	cp -pr build_docs_dir/StudyWeaver $(DOCS_DIR)
+	cp -pr build_docs_dir/merlin $(DOCS_DIR)
+	cp -pr build_docs_dir/weave/* $(DOCS_DIR)
+	rm -rf build_docs_dir
+	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)
+
 deploy_docs:
 	mkdir -p $(DOCS_DIR)
 	cp -pr build_docs_dir/Sina $(DOCS_DIR)
 	cp -pr build_docs_dir/maestrowf $(DOCS_DIR)
 	cp -pr build_docs_dir/pydv $(DOCS_DIR)
 	cp -pr build_docs_dir/kosh $(DOCS_DIR)
-	cp -pr build_docs_dir/merlin $(DOCS_DIR)
 	cp -pr build_docs_dir/trata $(DOCS_DIR)
 	cp -pr build_docs_dir/ibis $(DOCS_DIR)
 	cp -pr build_docs_dir/StudyWeaver $(DOCS_DIR)
 	cp -pr build_docs_dir/weave/* $(DOCS_DIR)
+	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)
+	cp -pr build_docs_dir/merlin $(DOCS_DIR)
 	rm -rf build_docs_dir
 	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)
