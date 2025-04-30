@@ -171,6 +171,11 @@ stages:
   script:
     - make build_trata_docs
 
+.build_studyweaver_docs:
+  stage: build_tools_docs
+  script:
+    - make build_studyweaver_docs
+    
 #
 # CZ
 #
@@ -435,9 +440,16 @@ build_trata_docs_rz:
     paths:
       - build_docs_dir/trata
 
+build_studyweaver_docs_rz:
+  needs: [ setup_rz ]
+  extends: [ .on_toss4_cpu_rz, .run_on_rz, .build_studyweaver_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/StudyWeaver
+
 build_weave_docs_push_to_zone_develop_feature_rz:
-  needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
-  dependencies: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
+  needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz, build_studyweaver_docs_rz ]
+  dependencies: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz, build_studyweaver_docs_rz ]
   extends: [ .on_toss4_cpu_rz, .run_on_rz, .merge_for_push_to_zone_develop_feature_rz, .build_weave_docs_push_to_zone_feature_rz ]
   artifacts:
     paths:

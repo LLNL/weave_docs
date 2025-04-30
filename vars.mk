@@ -40,7 +40,7 @@ tools_dir = develop
 
 WORKSPACE = /usr/workspace/weaveci/weave
 WORKDIR = $(WORKSPACE)/workdir
-SPACK_VERSION = 0.20
+SPACK_VERSION = 0.22.1
 SPACK_CORE_ENV_DIR = $(WORKSPACE)/repos/spack_core_environment/$(SPACK_VERSION)/spack_core_environment
 MACHINE = $(LCSCHEDCLUSTER)
 PYTHON = python3
