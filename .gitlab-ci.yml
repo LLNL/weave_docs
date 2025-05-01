@@ -562,9 +562,16 @@ build_trata_docs_scf:
     paths:
       - build_docs_dir/trata
 
+build_studyweaver_docs_scf:
+  needs: [ setup_scf ]
+  extends: [ .on_toss4_cpu_scf, .run_on_scf, .build_studyweaver_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/StudyWeaver
+
 build_weave_docs_push_to_zone_develop_feature_scf:
-  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
-  dependencies: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
+  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf, build_studyweaver_docs_scf ]
+  dependencies: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf, build_studyweaver_docs_scf ]
   extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_zone_develop_feature_scf, .build_weave_docs_push_to_zone_feature_scf ]
   artifacts:
     paths:
@@ -572,8 +579,8 @@ build_weave_docs_push_to_zone_develop_feature_scf:
       - build_docs_dir
 
 build_weave_docs_push_to_zone_develop_scf:
-  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
-  dependencies: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
+  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf, build_studyweaver_docs_scf ]
+  dependencies: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf, build_studyweaver_docs_scf ]
   extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_zone_develop_scf, .build_weave_docs_push_to_zone_scf ]
   artifacts:
     paths:
@@ -581,8 +588,8 @@ build_weave_docs_push_to_zone_develop_scf:
       - build_docs_dir
 
 build_weave_docs_push_to_develop_feature_scf:
-  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
-  dependencies: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
+  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf, build_studyweaver_docs_scf ]
+  dependencies: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf, build_studyweaver_docs_scf ]
   extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_develop_feature_scf, .build_weave_docs_push_to_target_feature_scf ]
   artifacts:
     paths:
@@ -590,8 +597,8 @@ build_weave_docs_push_to_develop_feature_scf:
       - build_docs_dir
 
 build_weave_docs_push_to_develop_scf:
-  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
-  dependencies: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
+  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf, build_studyweaver_docs_scf ]
+  dependencies: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf, build_studyweaver_docs_scf ]
   extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_develop_scf, .build_weave_docs_push_to_target_scf ]
   artifacts:
     paths:
