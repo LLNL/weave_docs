@@ -227,6 +227,7 @@ deploy_docs:
 	cp -pr build_docs_dir/kosh $(DOCS_DIR)
 	cp -pr build_docs_dir/trata $(DOCS_DIR)
 	cp -pr build_docs_dir/ibis $(DOCS_DIR)
+	cp -pr build_docs_dir/weave/* $(DOCS_DIR)
 	cp -pr build_docs_dir/StudyWeaver $(DOCS_DIR)
 	cp -pr build_docs_dir/weave/* $(DOCS_DIR)
 	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)
