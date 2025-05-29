@@ -29,6 +29,8 @@ nav:
         - Metadata Machine Learning: tutorials/Public/bouncing_ball_metadata_machine_learning/README.md
       - Rayleigh-Taylor UQ Study:
         - Rayleigh Taylor Modeling using pyranda: tutorials/Public/pyranda_rayleigh_taylor/README.md
+      - Digit Classification Machine Learning:
+        - Digit Classification Machine Learning: tutorials/Public/digit_classification/README.md
     # CZ Tutorials
     # RZ Tutorials
     # SCF Tutorials
