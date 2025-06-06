@@ -263,6 +263,11 @@ stages:
   script:
     - make deploy_docs
 
+.deploy_cz:
+  stage: deploy
+  script:
+    - make deploy_docs_cz
+    
 #
 # CZ
 #   
@@ -376,7 +381,7 @@ build_weave_docs_push_to_develop_cz:
 deploy_docs_cz:
   needs:
     - job: build_weave_docs_push_to_develop_cz
-  extends: [ .on_toss4_cpu_cz, .run_on_cz, .do_deploy_cz, .deploy ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .do_deploy_cz, .deploy_cz ]
 
 #
 # RZ
