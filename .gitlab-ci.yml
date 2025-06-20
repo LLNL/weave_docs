@@ -32,11 +32,11 @@ stages:
  
 .run_on_rz:
   rules:
-    - if: $SOURCE_ZONE == "RZ" && $CI_PIPELINE_SOURCE != "merge_request_event"
+    - if: $SOURCE_ZONE == "RZ" && $CI_PIPELINE_SOURCE != "merge_request_event" && ($CI_COMMIT_BRANCH =~ /^RZ_develop-feature-*/ || $CI_COMMIT_BRANCH == "RZ_develop" || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH =~ /^develop-feature-*/ )
 
 .run_on_scf:
   rules:
-    - if: $SOURCE_ZONE == "SCF" && $CI_PIPELINE_SOURCE != "merge_request_event"    
+    - if: $SOURCE_ZONE == "SCF" && $CI_PIPELINE_SOURCE != "merge_request_event" && ($CI_COMMIT_BRANCH =~ /^SCF_develop-feature-*/ || $CI_COMMIT_BRANCH == "SCF_develop" || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH =~ /^develop-feature-*/ )   
 
 .merge_for_push_to_zone_develop_feature_cz:
   rules:
