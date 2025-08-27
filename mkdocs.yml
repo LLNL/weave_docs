@@ -31,6 +31,8 @@ nav:
         - Rayleigh Taylor Modeling using pyranda: tutorials/Public/pyranda_rayleigh_taylor/README.md
       - Digit Classification Machine Learning:
         - Digit Classification Machine Learning: tutorials/Public/digit_classification/README.md
+      - Decision Trees:
+        - Decision Trees: tutorials/Public/decision_trees/README.md
     # CZ Tutorials
     # RZ Tutorials
     # SCF Tutorials

@@ -35,3 +35,7 @@ Originally an Amazon Web Services demo, this tutorial shows how to run an ensemb
 ## [Digit Classification Machine Learning](digit_classification)
 
 This tutorial will use Machine Learning to classify handwritten digits from the following dataset: [Optical Recognition of Handwritten Digits](https://archive.ics.uci.edu/dataset/80/optical+recognition+of+handwritten+digits). This will showcase the use of Kosh Loaders which can read any type of data.
+
+## [Decision Trees](decision_trees)
+
+This tutorial will use Machine Learning decision trees for classification and regression. This will showcase the use of Kosh Ensembles to group different types of data together.
