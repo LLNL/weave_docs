@@ -20,3 +20,4 @@ pandas
 jinja2
 encorewf
 numpy
+graphviz
