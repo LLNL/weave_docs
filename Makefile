@@ -80,6 +80,7 @@ print_env:
 setup: print_env
 	mkdir -p build_docs_dir
 	mkdir -p $(WORKDIR)
+	cd $(WORKDIR)
 	rm -rf weave_ci
 	git clone -b develop $(WEAVE_CI_URL)
 	ls -l weave_ci
