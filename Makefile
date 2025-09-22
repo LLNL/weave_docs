@@ -103,8 +103,11 @@ build_merlin_docs:
 build_pydv_docs:
 	$(call do_build_docs,pydv)
 
+# TEMPORARY
+#build_sina_docs:
+#	$(call do_build_docs,Sina)
 build_sina_docs:
-	$(call do_build_docs,Sina)
+	echo "TEMPORARILY skipping building Sina docs -- till we resolve build issue"
 
 build_trata_docs:
 	$(call do_build_docs,trata)
@@ -206,9 +209,10 @@ merge_for_push_to_target_branch_scf:
 	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
 	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
 
+# TEMPORARY
+#	cp -pr build_docs_dir/Sina $(DOCS_DIR)
 deploy_docs:
 	mkdir -p $(DOCS_DIR)
-	cp -pr build_docs_dir/Sina $(DOCS_DIR)
 	cp -pr build_docs_dir/maestrowf $(DOCS_DIR)
 	cp -pr build_docs_dir/pydv $(DOCS_DIR)
 	cp -pr build_docs_dir/kosh $(DOCS_DIR)
@@ -220,9 +224,10 @@ deploy_docs:
 	rm -rf build_docs_dir
 	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)
 
+# TEMPORARY
+#	cp -pr build_docs_dir/Sina $(DOCS_DIR)
 deploy_docs_cz:
 	mkdir -p $(DOCS_DIR)
-	cp -pr build_docs_dir/Sina $(DOCS_DIR)
 	cp -pr build_docs_dir/maestrowf $(DOCS_DIR)
 	cp -pr build_docs_dir/pydv $(DOCS_DIR)
 	cp -pr build_docs_dir/kosh $(DOCS_DIR)
