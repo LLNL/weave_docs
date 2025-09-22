@@ -103,11 +103,8 @@ build_merlin_docs:
 build_pydv_docs:
 	$(call do_build_docs,pydv)
 
-# TEMPORARY
-#build_sina_docs:
-#	$(call do_build_docs,Sina)
 build_sina_docs:
-	echo "TEMPORARILY skipping building Sina docs -- till we resolve build issue"
+	$(call do_build_docs,Sina)
 
 build_trata_docs:
 	$(call do_build_docs,trata)
