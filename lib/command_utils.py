@@ -76,6 +76,7 @@ def run_cmd(cmd, join_stderr=True, shell_cmd=False, verbose=True, cwd=None, env=
 
 def run_cmds(cmds, join_stderr=True, shell_cmd=False, verbose=True, cwd=None, env=None):
 
+    print("DEBUG DEBUG...run_cmd, cwd: {}".format(cwd))
     for cmd in cmds:
         ret_code, output = run_command(cmd, join_stderr, shell_cmd, verbose, cwd, env)
         if ret_code != SUCCESS:

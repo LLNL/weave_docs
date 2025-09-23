@@ -58,6 +58,7 @@ def add_cp_html_cmd(repo_project, build_docs_dir, cmds_list):
             else:
                 add_cmd = " && cp -r build/html {}/{}".format(build_docs_dir,
                                                               repo_project)
+ 
             cmds_list[i] = cmds_list[i] + add_cmd
             break
         elif 'mkdocs build' in cmd:
@@ -67,8 +68,11 @@ def add_cp_html_cmd(repo_project, build_docs_dir, cmds_list):
             new_cmd = orig_cmd.replace(orig_str, new_str)
             cmds_list[i] = new_cmd
             break
-
-        
+        elif 'make docs' in cmd:
+            add_cmd = " && cp -r docs/build/html {}/{}".format(build_docs_dir,
+                                                               repo_project)
+            cmds_list[i] = cmds_list[i] + add_cmd
+            break
         
     print("XXX in add_cp_html_cmd: ")
     print("cmds_list: ", cmds_list)
@@ -119,7 +123,7 @@ print("XXX XXX after returned from add_cp_html_cmd() ")
 print("cmds_list: ", cmds_list)
 
 if repo_project == "Sina":
-    status = run_cmds(cmds_list, cwd=repo_dir)
+    status = run_cmds(cmds_list, cwd="{}/python".format(repo_dir))
 else:
     status = do_run_cmds_in_venv(repo_dir, cmds_list, venv)
 
