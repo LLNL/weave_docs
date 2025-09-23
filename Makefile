@@ -9,7 +9,7 @@ endef
 define patch_mds
 	sed -i 's|https://maestrowf.readthedocs.io/en/latest/|https://lc.llnl.gov/weave/maestrowf/html/index.html|g' docs/tools.md
 	sed -i 's|https://merlin.readthedocs.io/en/latest/|https://lc.llnl.gov/weave/merlin/html/index.html|g' docs/tools.md
-	sed -i 's|https://kosh.readthedocs.io/en/latest/|https://lc.llnl.gov/weave/kosh/html/index.html|g' docs/tools.md
+	sed -i 's|https://kosh.readthedocs.io/en/latest|https://lc.llnl.gov/weave/kosh/html/index.html|g' docs/tools.md
 	sed -i 's|https://pydv.readthedocs.io/en/latest/|https://lc.llnl.gov/weave/pydv/html/index.html|g' docs/tools.md
 	sed -i 's|https://llnl-ibis.readthedocs.io/en/latest|https://lc.llnl.gov/weave/ibis/html/index.html|g' docs/tools.md
 	sed -i 's|https://llnl-trata.readthedocs.io/en/latest|https://lc.llnl.gov/weave/trata/html/index.html|g' docs/tools.md
