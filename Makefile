@@ -116,7 +116,9 @@ build_studyweaver_docs:
 	$(call do_build_docs,StudyWeaver)
 
 build_docs:
+	echo "XXX XXX XXX build_docs: XXX XXX XXX"
 	$(call patch_files_and_build_docs)
+	head -50 docs/tools.md
 
 merge_for_push_to_zone_feature:
 	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
