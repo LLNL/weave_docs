@@ -9,11 +9,13 @@ endef
 define patch_mds
 	sed -i 's|https://maestrowf.readthedocs.io/en/latest/|https://lc.llnl.gov/weave/maestrowf/html/index.html|g' docs/tools.md
 	sed -i 's|https://merlin.readthedocs.io/en/latest/|https://lc.llnl.gov/weave/merlin/html/index.html|g' docs/tools.md
-	sed -i 's|https://kosh.readthedocs.io/en/latest/|https://lc.llnl.gov/weave/kosh/html/index.html|g' docs/tools.md
+	sed -i 's|https://kosh.readthedocs.io/en/latest|https://lc.llnl.gov/weave/kosh/html/index.html|g' docs/tools.md
 	sed -i 's|https://pydv.readthedocs.io/en/latest/|https://lc.llnl.gov/weave/pydv/html/index.html|g' docs/tools.md
 	sed -i 's|https://llnl-ibis.readthedocs.io/en/latest|https://lc.llnl.gov/weave/ibis/html/index.html|g' docs/tools.md
 	sed -i 's|https://llnl-trata.readthedocs.io/en/latest|https://lc.llnl.gov/weave/trata/html/index.html|g' docs/tools.md
-	sed -i 's;[Public GitHub](https://github.com/LLNL/Sina);[Public GitHub](https://github.com/LLNL/Sina) | [Documentation]https://lc.llnl.gov/weave/Sina/html/index.html;g' docs/tools.md
+	echo "XXX XXX XXX doing sed on Sina...XXX XXX XXX"
+	sed -i 's#[Public GitHub](https://github.com/LLNL/Sina)#[Public GitHub](https://github.com/LLNL/Sina) | [Documentation](https://lc.llnl.gov/weave/Sina/html/index.html)#g' docs/tools.md
+	grep "**Sina** " docs/tools.md
 	if [ $(SOURCE_ZONE) == RZ ]; then \
 		cd docs; \
 		find . -type f -name '*.md' | xargs  sed -i 's|https://lc.llnl.gov|https://rzlc.llnl.gov|g'; \
@@ -60,6 +62,8 @@ endef
 define patch_files_and_build_docs
 	$(call copy_mds)
 	$(call patch_mds)
+	sed -i 's#[Public GitHub](https://github.com/LLNL/Sina)#[Public GitHub](https://github.com/LLNL/Sina) | [Documentation](https://lc.llnl.gov/weave/Sina/html/index.html)#g' docs/tools.md
+	head -40 docs/tools.md
 	$(call patch_mkdocs_yml)
 	git status
 	cat mkdocs.yml
@@ -114,7 +118,9 @@ build_studyweaver_docs:
 	$(call do_build_docs,StudyWeaver)
 
 build_docs:
+	echo "XXX XXX XXX build_docs: XXX XXX XXX"
 	$(call patch_files_and_build_docs)
+	head -50 docs/tools.md
 
 merge_for_push_to_zone_feature:
 	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
@@ -133,9 +139,15 @@ merge_for_push_to_target_feature:
 	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
 	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
 	git status
+	echo "XXX XXX checking docs/tools.md XXX XXX 1"
+	head -40 docs/tools.md
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
+	echo "XXX XXX checking docs/tools.md XXX XXX 2"
+	head -40 docs/tools.md
 	git pull origin $(SOURCE_ZONE)_$(TARGET)
+	echo "XXX XXX checking docs/tools.md XXX XXX 3"
+	head -40 docs/tools.md
 	git status
 
 merge_for_push_to_target_branch:
