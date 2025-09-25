@@ -139,9 +139,15 @@ merge_for_push_to_target_feature:
 	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
 	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
 	git status
+	echo "XXX XXX checking docs/tools.md XXX XXX 1"
+	head -40 docs/tools.md
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
+	echo "XXX XXX checking docs/tools.md XXX XXX 2"
+	head -40 docs/tools.md
 	git pull origin $(SOURCE_ZONE)_$(TARGET)
+	echo "XXX XXX checking docs/tools.md XXX XXX 3"
+	head -40 docs/tools.md
 	git status
 
 merge_for_push_to_target_branch:
