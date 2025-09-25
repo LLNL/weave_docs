@@ -13,7 +13,9 @@ define patch_mds
 	sed -i 's|https://pydv.readthedocs.io/en/latest/|https://lc.llnl.gov/weave/pydv/html/index.html|g' docs/tools.md
 	sed -i 's|https://llnl-ibis.readthedocs.io/en/latest|https://lc.llnl.gov/weave/ibis/html/index.html|g' docs/tools.md
 	sed -i 's|https://llnl-trata.readthedocs.io/en/latest|https://lc.llnl.gov/weave/trata/html/index.html|g' docs/tools.md
+	echo "XXX XXX XXX doing sed on Sina...XXX XXX XXX"
 	sed -i 's#[Public GitHub](https://github.com/LLNL/Sina)#[Public GitHub](https://github.com/LLNL/Sina) | [Documentation](https://lc.llnl.gov/weave/Sina/html/index.html)#g' docs/tools.md
+	grep "**Sina** " docs/tools.md
 	if [ $(SOURCE_ZONE) == RZ ]; then \
 		cd docs; \
 		find . -type f -name '*.md' | xargs  sed -i 's|https://lc.llnl.gov|https://rzlc.llnl.gov|g'; \
