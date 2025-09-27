@@ -33,7 +33,7 @@ Multiple WEAVE tools under the same workflow categories can be used to achieve y
 
 ## Data Management
 
-**Sina** | [Public GitHub](https://github.com/LLNL/Sina)
+**Sina** | [Public GitHub](https://github.com/LLNL/Sina) <!-- SINA DOCUMENTATION HERE -->
 
 * Sina allows codes to store, query, and visualize their data through an easy-to-use Python API. Data that fits the recognized schema can be ingested into one or more supported backends. (See below for a summary of Sina's data visualization capabilities.)
 
