@@ -75,7 +75,7 @@ Multiple WEAVE tools under the same workflow categories can be used to achieve y
 
 ## Data Visualization.
 
-**PyDV** | [Public GitHub](https://github.com/LLNL/pydv) | [Documentation](https://pydv.readthedocs.io/en/latest/) | [Quick Start Guide](https://pydv.readthedocs.io/en/latest/getting_started.html)
+**PyDV** | [Public GitHub](https://github.com/LLNL/pydv) | [Documentation](https://pydv.readthedocs.io/en/latest/) <!-- PYDV GETTING STARTED HERE -->
 
 * The Python Data Visualizer (PyDV) is a replacement for ULTRA written in Python. PyDV allows the presentation, manipulation, and analysis of 1D data sets, i.e., (x,y) pairs. Presentation refers to the capability to display and make hard copies of data plots. Manipulation refers to the capability to excerpt, shift, and scale data sets. Analysis refers to the capability to combine data sets in various ways to create new data sets.
 
