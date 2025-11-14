@@ -33,7 +33,7 @@ Multiple WEAVE tools under the same workflow categories can be used to achieve y
 
 ## Data Management
 
-**Sina** | [Public GitHub](https://github.com/LLNL/Sina) <!-- SINA DOCUMENTATION HERE -->
+**Sina** | [C++ library in Axom](https://axom.readthedocs.io/en/develop/axom/sina/docs/sphinx/index.html) and [Python Public GitHub](https://github.com/LLNL/Sina) <!-- SINA DOCUMENTATION HERE -->
 
 * Sina allows codes to store, query, and visualize their data through an easy-to-use Python API. Data that fits the recognized schema can be ingested into one or more supported backends. (See below for a summary of Sina's data visualization capabilities.)
 
@@ -41,7 +41,7 @@ Multiple WEAVE tools under the same workflow categories can be used to achieve y
 
 * Sina is intended especially for use with run metadata, allowing users to easily and efficiently find simulation runs that match desired criteria.
 
-* Sina's code comes in two parts. The `cpp` component is an API for use in C++ codes that allows them to write data in Sina's recognized format. The remainder of Sina is found in the `python` directory, and includes all the functionality for handling and ingesting data, visualizing it through Jupyter, and so on.
+* Sina's code comes in two parts. The [`cpp` component](https://github.com/LLNL/axom/) is an API for use in C++ codes that allows them to write data in Sina's recognized format. Sina's Python package is found in the [`python` directory](https://github.com/LLNL/Sina/python), and includes all the functionality for handling and ingesting data, visualizing it through Jupyter, and so on.
 
 * Sina allows for integration with codes and outputs metadata, files produced, and curves into a common output format. These files can later be ingested into a catalog. Once in a catalog, Sina provides powerful tools to query the content.
 
