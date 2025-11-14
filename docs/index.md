@@ -18,7 +18,7 @@ WEAVE supports users' workflows via these open-source software tools, which are 
     * [Maestro](https://github.com/LLNL/maestrowf): automate workflows that script tasks to layer on parameterization, task dependencies, and output
     * [Merlin](https://github.com/LLNL/merlin): extension of Maestro that builds, runs, and processes large-scale machine learning–based workflows
 * **Simulations and their data management**
-    * [Sina](https://github.com/LLNL/Sina): store, query, and visualize simulation data through a Python API
+    * [Sina C++](https://axom.readthedocs.io/en/develop/axom/sina/docs/sphinx/index.html) and [Python](https://github.com/LLNL/Sina): store, query, and visualize simulation data through a Python API
     * [Kosh](https://github.com/LLNL/kosh): built on top of Sina to consistently access and process data, and move it to another location for collaboration
 * **Simulation evaluation**
     * [Trata](https://github.com/LLNL/trata): Bayesian sampling package that generates sampling points and patterns for composite studies
