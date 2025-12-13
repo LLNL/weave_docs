@@ -263,11 +263,6 @@ stages:
   script:
     - make deploy_docs
 
-.deploy_cz:
-  stage: deploy
-  script:
-    - make deploy_docs_cz
-    
 #
 # CZ
 #   
@@ -330,9 +325,17 @@ build_trata_docs_cz:
     paths:
       - build_docs_dir/trata
 
+build_studyweaver_docs_cz:
+  needs: [ setup_cz ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_studyweaver_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/StudyWeaver
+
+
 build_weave_docs_push_to_zone_develop_feature_cz:
-  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
-  dependencies: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
+  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz, build_studyweaver_docs_cz ]
+  dependencies: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz, build_studyweaver_docs_cz ]
   extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_zone_develop_feature_cz, .build_weave_docs_push_to_zone_feature ]
   artifacts:
     paths:
@@ -340,8 +343,8 @@ build_weave_docs_push_to_zone_develop_feature_cz:
       - build_docs_dir
 
 build_weave_docs_push_to_zone_develop_cz:
-  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
-  dependencies: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
+  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz, build_studyweaver_docs_cz ]
+  dependencies: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz, build_studyweaver_docs_cz ]
   extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_zone_develop_cz, .build_weave_docs_push_to_zone ]
   artifacts:
     paths:
@@ -349,8 +352,8 @@ build_weave_docs_push_to_zone_develop_cz:
       - build_docs_dir
 
 build_weave_docs_push_to_develop_feature_cz:
-  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
-  dependencies: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
+  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz, build_studyweaver_docs_cz ]
+  dependencies: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz, build_studyweaver_docs_cz ]
   extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_develop_feature_cz, .build_weave_docs_push_to_target_feature ]
   artifacts:
     paths:
@@ -358,8 +361,8 @@ build_weave_docs_push_to_develop_feature_cz:
       - build_docs_dir
 
 build_weave_docs_push_to_develop_cz:
-  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
-  dependencies: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
+  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz, build_studyweaver_docs_cz ]
+  dependencies: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz, build_studyweaver_docs_cz ]
   extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_develop_cz, .build_weave_docs_push_to_target ]
   artifacts:
     paths:
@@ -381,7 +384,7 @@ build_weave_docs_push_to_develop_cz:
 deploy_docs_cz:
   needs:
     - job: build_weave_docs_push_to_develop_cz
-  extends: [ .on_toss4_cpu_cz, .run_on_cz, .do_deploy_cz, .deploy_cz ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .do_deploy_cz, .deploy ]
 
 #
 # RZ
