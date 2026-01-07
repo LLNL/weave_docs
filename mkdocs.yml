@@ -33,6 +33,8 @@ nav:
         - Digit Classification Machine Learning: tutorials/Public/digit_classification/README.md
       - Decision Trees:
         - Decision Trees: tutorials/Public/decision_trees/README.md
+      - Rayleigh-Taylor 2D LSTM CNN:
+        - Rayleigh Taylor Deep Learning: tutorials/Public/pyranda_deep_learning/README.md
     # CZ Tutorials
     # RZ Tutorials
     # SCF Tutorials
