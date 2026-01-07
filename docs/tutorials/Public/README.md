@@ -39,3 +39,7 @@ This tutorial will use Machine Learning to classify handwritten digits from the 
 ## [Decision Trees](decision_trees)
 
 This tutorial will use Machine Learning decision trees for classification and regression. This will showcase the use of Kosh Ensembles to group different types of data together.
+
+## [Pyranda Deep Learning](pyranda_deep_learning)
+
+Expands on the Pyranda Rayleigh Taylor tutorial workflow and modifies it to use deep learning to train a 2D LSTM CNN model on Pyranda 2D Simulation data. It will use Tensorflow and Keras as the deep learning software and Maestro as the orechestration software.
