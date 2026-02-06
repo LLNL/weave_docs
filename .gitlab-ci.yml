@@ -369,22 +369,22 @@ build_weave_docs_push_to_develop_cz:
       - docs
       - build_docs_dir
 
-#deploy_docs_cz:
-#  needs:
-#    - job: build_weave_docs_push_to_zone_develop_feature_cz
-#      optional: true
-#    - job: build_weave_docs_push_to_zone_develop_cz
-#      optional: true
-#    - job: build_weave_docs_push_to_develop_feature_cz
-#      optional: true
-#    - job: build_weave_docs_push_to_develop_cz
-#      optional: true
-#  extends: [ .on_toss4_cpu_cz, .run_on_cz, .deploy ]
-
 deploy_docs_cz:
-  needs:
-    - job: build_weave_docs_push_to_develop_cz
-  extends: [ .on_toss4_cpu_cz, .run_on_cz, .do_deploy_cz, .deploy ]
+ needs:
+   - job: build_weave_docs_push_to_zone_develop_feature_cz
+     optional: true
+   - job: build_weave_docs_push_to_zone_develop_cz
+     optional: true
+   - job: build_weave_docs_push_to_develop_feature_cz
+     optional: true
+   - job: build_weave_docs_push_to_develop_cz
+     optional: true
+ extends: [ .on_toss4_cpu_cz, .run_on_cz, .deploy ]
+
+# deploy_docs_cz:
+#   needs:
+#     - job: build_weave_docs_push_to_develop_cz
+#   extends: [ .on_toss4_cpu_cz, .run_on_cz, .do_deploy_cz, .deploy ]
 
 #
 # RZ

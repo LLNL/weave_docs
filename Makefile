@@ -88,7 +88,7 @@ setup: print_env
 	ls -l weave_ci
 	rm -rf $(VENV)
 	$(CREATE_VENV_SCRIPT) -v latest-develop -e $(VENV) -p cpu
-	source $(VENV)/bin/activate && pip install $(PKGS) && pip list && deactivate
+	source $(VENV)/bin/activate && pip install $(PKGS) && cd plugins/mkdocs_version_diff && pip install . && pip list && deactivate
 
 build_ibis_docs:
 	$(call do_build_docs,ibis)
@@ -216,7 +216,11 @@ deploy_docs:
 	cp -pr build_docs_dir/kosh $(DOCS_DIR)
 	cp -pr build_docs_dir/trata $(DOCS_DIR)
 	cp -pr build_docs_dir/ibis $(DOCS_DIR)
-	cp -pr build_docs_dir/StudyWeaver $(DOCS_DIR)
+	mkdir -p $(DOCS_DIR)/StudyWeaver
+	# Mike may have previously published alias dirs (e.g. latest/) as symlinks, which many
+	# static hosts won't serve and which `cp -r` can't overwrite with a real directory.
+	if [ -e $(DOCS_DIR)/StudyWeaver/latest ] && [ ! -d $(DOCS_DIR)/StudyWeaver/latest ]; then rm -f $(DOCS_DIR)/StudyWeaver/latest; fi
+	rsync -a --delete build_docs_dir/StudyWeaver/ $(DOCS_DIR)/StudyWeaver/
 	cp -pr build_docs_dir/merlin $(DOCS_DIR)
 	cp -pr build_docs_dir/weave/* $(DOCS_DIR)
 	rm -rf build_docs_dir
