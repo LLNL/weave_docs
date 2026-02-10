@@ -163,10 +163,12 @@ if status != SUCCESS:
 print("after returned from add_cp_html_cmd() ")
 print("cmds_list: ", cmds_list)
 
-if repo_project == "Sina":
-    status = run_cmds(cmds_list, shell_cmd=True, cwd="{}/python".format(repo_dir))
-else:
-    status = do_run_cmds_in_venv(repo_dir, cmds_list, venv)
+#if repo_project == "Sina":
+#    status = run_cmds(cmds_list, shell_cmd=True, cwd="{}/python".format(repo_dir))
+#else:
+#    status = do_run_cmds_in_venv(repo_dir, cmds_list, venv)
+status = do_run_cmds_in_venv(repo_dir, cmds_list, venv)
+
 
 sys.exit(status)
 
