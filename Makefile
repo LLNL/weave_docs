@@ -87,7 +87,7 @@ setup: print_env
 	git clone -b develop $(WEAVE_CI_URL)
 	ls -l weave_ci
 	rm -rf $(VENV)
-	$(CREATE_VENV_SCRIPT) -v latest-develop -e $(VENV) -p cpu
+	$(CREATE_VENV_SCRIPT) -v latest-stable -e $(VENV)
 	source $(VENV)/bin/activate && pip install $(PKGS) && cd plugins/mkdocs_version_diff && pip install . && pip list && deactivate
 
 build_ibis_docs:
