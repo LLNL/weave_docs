@@ -384,6 +384,7 @@ build_weave_docs_push_to_develop_cz:
 deploy_docs_cz:
   needs:
     - job: build_weave_docs_push_to_develop_cz
+      optional: false
   extends: [ .on_toss4_cpu_cz, .run_on_cz, .do_deploy_cz, .deploy ]
 
 #
@@ -506,6 +507,7 @@ build_weave_docs_push_to_develop_rz:
 deploy_docs_rz:
   needs:
     - job: build_weave_docs_push_to_develop_rz
+      optional: false 
   extends: [ .on_toss4_cpu_rz, .run_on_rz, .do_deploy_rz, .deploy ]
 
 #
@@ -628,4 +630,5 @@ build_weave_docs_push_to_develop_scf:
 deploy_docs_scf:
   needs:
     - job: build_weave_docs_push_to_develop_scf
+      optional: false    
   extends: [ .on_toss4_cpu_scf, .run_on_scf, .do_deploy_scf, .deploy ]
