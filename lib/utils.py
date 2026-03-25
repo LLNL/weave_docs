@@ -19,9 +19,9 @@ def get_json_info(tool_json):
         for k in tool_dict:
             print("{}: {}".format(k, tool_dict[k]))
             
-    if "studyweaver" in tool_json.lower():
-        # temporarily overwrite mkdocs with mike
-        tool_dict["build_docs_cmds"] = ["pip install .[docs]", "mike deploy" ]
+    #if "studyweaver" in tool_json.lower():
+    #    # temporarily overwrite mkdocs with mike
+    #    tool_dict["build_docs_cmds"] = ["pip install .[docs]", "mike deploy" ]
 
     return tool_dict
 
