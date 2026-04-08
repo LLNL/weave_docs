@@ -49,15 +49,6 @@ define merge_branch_1_to_branch_2
 	fi
 endef
 
-define sync_zone_branch
-	if [ $(SOURCE_ZONE) == RZ ]; then \
-		$(call merge_branch_1_to_branch_2,origin/CZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push); \
-	fi
-	if [ $(SOURCE_ZONE) == SCF ]; then \
-		$(call merge_branch_1_to_branch_2,origin/RZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push); \
-	fi
-endef
-
 define patch_files_and_build_docs
 	$(call copy_mds)
 	$(call patch_mds)
@@ -117,96 +108,96 @@ build_studyweaver_docs:
 build_docs:
 	$(call patch_files_and_build_docs)
 
-merge_for_push_to_zone_feature:
-	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+merge_for_push_to_CZ_develop_feature:
+	$(call merge_branch_1_to_branch_2,origin/develop,CZ_develop,push)
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	echo "### git pull origin $(SOURCE_ZONE)_$(TARGET) ###"
-	git pull origin $(SOURCE_ZONE)_$(TARGET)
+	echo "### git pull origin CZ_develop ###"
+	git pull origin CZ_develop
 	git status
 
-merge_for_push_to_zone:
-	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+merge_for_push_to_CZ_develop:
+	$(call merge_branch_1_to_branch_2,origin/develop,CZ_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/CZ_develop,develop,no_push)
 
-merge_for_push_to_target_feature:
-	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+merge_for_push_to_develop_feature_cz:
+	$(call merge_branch_1_to_branch_2,origin/develop,CZ_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/CZ_develop,develop,no_push)
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	git pull origin $(SOURCE_ZONE)_$(TARGET)
+	git pull origin CZ_develop
 	git status
 
-merge_for_push_to_target_branch:
-	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
-
+merge_for_push_to_develop_cz:
+	$(call merge_branch_1_to_branch_2,origin/develop,CZ_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/CZ_develop,develop,no_push)
 
 #
 # RZ
 #
-merge_for_push_to_zone_feature_rz:
-	$(call merge_branch_1_to_branch_2,origin/CZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+merge_for_push_to_RZ_develop_feature:
+	$(call merge_branch_1_to_branch_2,origin/CZ_develop,RZ_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/develop,RZ_develop,push)
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	git pull origin $(SOURCE_ZONE)_$(TARGET)
+	git pull origin RZ_develop
 	git status
 
-merge_for_push_to_zone_rz:
-	$(call merge_branch_1_to_branch_2,origin/CZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+merge_for_push_to_RZ_develop:
+	$(call merge_branch_1_to_branch_2,origin/CZ_develop,RZ_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/develop,RZ_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/RZ_develop,develop,no_push)
 
-merge_for_push_to_target_feature_rz:
-	$(call merge_branch_1_to_branch_2,origin/CZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+merge_for_push_to_develop_feature_rz:
+	$(call merge_branch_1_to_branch_2,origin/CZ_develop,RZ_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/develop,RZ_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/RZ_develop,develop,no_push)
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	git pull origin $(SOURCE_ZONE)_$(TARGET)
+	git pull origin RZ_develop
 	git status
 
-merge_for_push_to_target_branch_rz:
-	$(call merge_branch_1_to_branch_2,origin/CZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+merge_for_push_to_develop_rz:
+	$(call merge_branch_1_to_branch_2,origin/CZ_develop,RZ_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/develop,RZ_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/RZ_develop,develop,no_push)
 
 #
 # SCF
 #
-merge_for_push_to_zone_feature_scf:
-	$(call merge_branch_1_to_branch_2,origin/RZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
+merge_for_push_to_SCF_develop_feature:
+	$(call merge_branch_1_to_branch_2,origin/RZ_develop,SCF_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/develop,SCF_develop,push)
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	git pull origin $(SOURCE_ZONE)_$(TARGET)
+	git pull origin SCF_develop
 	git status
 
-merge_for_push_to_zone_scf:
-	$(call merge_branch_1_to_branch_2,origin/RZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+merge_for_push_to_SCF_develop:
+	$(call merge_branch_1_to_branch_2,origin/RZ_develop,SCF_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/develop,SCF_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/SCF_develop,develop,no_push)
 
-merge_for_push_to_target_feature_scf:
-	$(call merge_branch_1_to_branch_2,origin/RZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+merge_for_push_to_develop_feature_scf:
+	$(call merge_branch_1_to_branch_2,origin/RZ_develop,SCF_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/develop,SCF_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/SCF_develop,develop,no_push)
 	git status
 	git fetch --all
 	git checkout $(CI_COMMIT_BRANCH)
-	git pull origin $(SOURCE_ZONE)_$(TARGET)
+	git pull origin SCF_develop
 	git status
 
-merge_for_push_to_target_branch_scf:
-	$(call merge_branch_1_to_branch_2,origin/RZ_$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(TARGET),$(SOURCE_ZONE)_$(TARGET),push)
-	$(call merge_branch_1_to_branch_2,origin/$(SOURCE_ZONE)_$(TARGET),$(TARGET),no_push)
+merge_for_push_to_develop_scf:
+	$(call merge_branch_1_to_branch_2,origin/RZ_develop,SCF_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/develop,SCF_develop,push)
+	$(call merge_branch_1_to_branch_2,origin/SCF_develop,develop,no_push)
+
 
 deploy_docs:
 	mkdir -p $(DOCS_DIR)
