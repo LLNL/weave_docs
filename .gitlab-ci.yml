@@ -41,25 +41,25 @@ stages:
 .merge_for_push_to_zone_develop_feature_cz:
   rules:
     - if: $SOURCE_ZONE == "CZ" && $CI_COMMIT_BRANCH =~ /^CZ_develop-feature-*/
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_zone_develop_cz:
   rules:
     - if: $SOURCE_ZONE == "CZ" && $CI_COMMIT_BRANCH == "CZ_develop"
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_develop_cz:
   rules:
     - if: $SOURCE_ZONE == "CZ" && $CI_COMMIT_BRANCH == "develop"
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_develop_feature_cz:
   rules:
     - if: $SOURCE_ZONE == "CZ" && $CI_COMMIT_BRANCH =~ /^develop-feature-/
-      when: always
+      when: on_success
     - when: never
 
 .do_deploy_cz:
@@ -71,25 +71,25 @@ stages:
 .merge_for_push_to_zone_develop_feature_rz:
   rules:
     - if: $SOURCE_ZONE == "RZ" && $CI_COMMIT_BRANCH =~ /^RZ_develop-feature-*/
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_zone_develop_rz:
   rules:
     - if: $SOURCE_ZONE == "RZ" && $CI_COMMIT_BRANCH == "RZ_develop"
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_develop_rz:
   rules:
     - if: $SOURCE_ZONE == "RZ" && $CI_COMMIT_BRANCH == "develop"
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_develop_feature_rz:
   rules:
     - if: $SOURCE_ZONE == "RZ" && $CI_COMMIT_BRANCH =~ /^develop-feature-/
-      when: always
+      when: on_success
     - when: never
 
 .do_deploy_rz:
@@ -101,25 +101,25 @@ stages:
 .merge_for_push_to_zone_develop_feature_scf:
   rules:
     - if: $SOURCE_ZONE == "SCF" && $CI_COMMIT_BRANCH =~ /^SCF_develop-feature-*/
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_zone_develop_scf:
   rules:
     - if: $SOURCE_ZONE == "SCF" && $CI_COMMIT_BRANCH == "SCF_develop"
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_develop_scf:
   rules:
     - if: $SOURCE_ZONE == "SCF" && $CI_COMMIT_BRANCH == "develop"
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_develop_feature_scf:
   rules:
     - if: $SOURCE_ZONE == "SCF" && $CI_COMMIT_BRANCH =~ /^develop-feature-/
-      when: always
+      when: on_success
     - when: never
 
 .do_deploy_scf:
