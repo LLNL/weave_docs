@@ -68,7 +68,7 @@ stages:
       when: on_success
     - when: never    
     
-.merge_for_push_to_zone_RZ_develop_feature:
+.merge_for_push_to_RZ_develop_feature:
   rules:
     - if: $SOURCE_ZONE == "RZ" && $CI_COMMIT_BRANCH =~ /^RZ_develop-feature-*/
       when: on_success
@@ -179,7 +179,6 @@ stages:
 #
 # CZ
 #
-
 .build_weave_docs_push_to_CZ_develop_feature:
   stage: build_weave_docs
   script:
@@ -429,17 +428,6 @@ build_weave_docs_push_to_develop_cz:
       - docs
       - build_docs_dir
 
-#deploy_docs_cz:
-# needs:
-#   - job: build_weave_docs_push_to_zone_develop_feature_cz
-#     optional: true
-#   - job: build_weave_docs_push_to_zone_develop_cz
-#     optional: true
-#   - job: build_weave_docs_push_to_develop_feature_cz
-#     optional: true
-#   - job: build_weave_docs_push_to_develop_cz
-#     optional: true
-# extends: [ .on_toss4_cpu_cz, .run_on_cz, .deploy ]
 
 deploy_docs_cz:
   needs:
@@ -612,18 +600,6 @@ build_weave_docs_push_to_develop_rz:
       - docs
       - build_docs_dir
 
-#deploy_docs_rz:
-#  needs:
-#    - job: build_weave_docs_push_to_zone_develop_feature_rz
-#      optional: true
-#    - job: build_weave_docs_push_to_zone_develop_rz
-#      optional: true
-#    - job: build_weave_docs_push_to_develop_feature_rz
-#      optional: true
-#    - job: build_weave_docs_push_to_develop_rz
-#      optional: true
-#  extends: [ .on_toss4_cpu_rz, .run_on_rz, .deploy ]
- 
 deploy_docs_rz:
   needs:
     - job: build_weave_docs_push_to_develop_rz
@@ -717,7 +693,7 @@ build_weave_docs_push_to_SCF_develop_feature:
       artifacts: true
     - job: build_studyweaver_docs_scf
       artifacts: true
-  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_SCF_develop_feature, .build_weave_docs_push_to_zone_feature_scf ]
+  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_SCF_develop_feature, .build_weave_docs_push_to_SCF_develop_feature ]
   artifacts:
     paths:
       - docs
@@ -741,7 +717,7 @@ build_weave_docs_push_to_SCF_develop:
       artifacts: true
     - job: build_studyweaver_docs_scf
       artifacts: true
-  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_SCF_develop, .build_weave_docs_push_to_zone_scf ]
+  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_SCF_develop, .build_weave_docs_push_to_SCF_develop ]
   artifacts:
     paths:
       - docs
@@ -794,18 +770,6 @@ build_weave_docs_push_to_develop_scf:
     paths:
       - docs
       - build_docs_dir
-
-#deploy_docs_scf:
-#  needs:
-#    - job: build_weave_docs_push_to_zone_develop_feature_scf
-#      optional: true
-#    - job: build_weave_docs_push_to_zone_develop_scf
-#      optional: true
-#    - job: build_weave_docs_push_to_develop_feature_scf
-#      optional: true
-#    - job: build_weave_docs_push_to_develop_scf
-#      optional: true
-#  extends: [ .on_toss4_cpu_scf, .run_on_scf, .deploy ]
 
 deploy_docs_scf:
   needs:
