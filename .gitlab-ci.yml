@@ -741,7 +741,7 @@ build_weave_docs_push_to_develop_feature_scf:
       artifacts: true
     - job: build_studyweaver_docs_scf
       artifacts: true
-  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_develop_feature_scf, .build_weave_docs_push_to_target_feature_scf ]
+  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_develop_feature_scf, .build_weave_docs_push_to_develop_feature_scf ]
   artifacts:
     paths:
       - docs
@@ -765,7 +765,7 @@ build_weave_docs_push_to_develop_scf:
       artifacts: true
     - job: build_studyweaver_docs_scf
       artifacts: true
-  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_develop_scf, .build_weave_docs_push_to_target_scf ]
+  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_develop_scf, .build_weave_docs_push_to_develop_scf ]
   artifacts:
     paths:
       - docs
