@@ -182,19 +182,16 @@ stages:
 .build_weave_docs_push_to_CZ_develop_feature:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_CZ_develop_feature
     - make build_docs
 
 .build_weave_docs_push_to_CZ_develop:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_CZ_develop
     - make build_docs
 
 .build_weave_docs_push_to_develop_feature_cz:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_develop_feature_cz
     - make build_docs
 
 .build_weave_docs_push_to_develop_cz:
@@ -209,19 +206,16 @@ stages:
 .build_weave_docs_push_to_RZ_develop_feature:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_RZ_develop_feature
     - make build_docs
 
 .build_weave_docs_push_to_RZ_develop:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_RZ_develop
     - make build_docs
 
 .build_weave_docs_push_to_develop_feature_rz:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_develop_feature_rz
     - make build_docs
 
 .build_weave_docs_push_to_develop_rz:
@@ -236,19 +230,16 @@ stages:
 .build_weave_docs_push_to_SCF_develop_feature:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_SCF_develop_feature
     - make build_docs
 
 .build_weave_docs_push_to_SCF_develop:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_SCF_develop
     - make build_docs
 
 .build_weave_docs_push_to_develop_feature_scf:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_develop_feature_scf
     - make build_docs
 
 .build_weave_docs_push_to_develop_scf:
