@@ -15,31 +15,10 @@ define do_build_weave_docs
 	if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then \
 		git branch -f gh-pages origin/gh-pages || true; \
 	fi; \
-	. "$(VENV)/bin/activate" && \
+	. "$(VENV)/bin/activate"; \
 	echo "Deploying version $$tag"; \
 	mike deploy "$$tag" --push; \
-	latest_tag=$$(python3 -c 'from packaging.version import Version; import subprocess; out = subprocess.check_output(["mike", "list"], text=True); versions = []; \
-for line in out.splitlines(): \
-    s = line.strip(); \
-    if not s or s.startswith("alias:"): \
-        continue; \
-    name = s.split()[0]; \
-    if name == "latest": \
-        continue; \
-    try: \
-        pv = Version(name); \
-        if pv.is_devrelease or not pv.is_prerelease: \
-            versions.append((pv, name)); \
-    except Exception: \
-        pass; \
-devs = [(pv, name) for pv, name in versions if pv.is_devrelease]; \
-stables = [(pv, name) for pv, name in versions if not pv.is_prerelease and not pv.is_devrelease]; \
-chosen = ""; \
-if devs: \
-    chosen = max(devs)[1]; \
-elif stables: \
-    chosen = max(stables)[1]; \
-print(chosen)'); \
+	latest_tag=$$(python3 utils/get_latest_mike_version.py); \
 	if [ -n "$$latest_tag" ]; then \
 		echo "Setting latest -> $$latest_tag"; \
 		mike alias --update-aliases --push "$$latest_tag" latest; \
