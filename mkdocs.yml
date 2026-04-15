@@ -3,6 +3,12 @@ site_name: Workflow Enablement and AdVanced Environments (WEAVE)
 use_directory_urls: false
 site_dir: weave
 
+plugins:
+  - search
+  - version-diff:
+      enabled: true
+      button_text: "📄⬅️🆚➡️📄 Compare Versions"
+    
 nav:
   - General:
     - Overview: index.md
@@ -97,3 +103,7 @@ extra_javascript:
 extra_css:
   # Additional Custom CSS
   - css/custom_css/custom.css
+
+extra:
+  version:
+    provider: mike

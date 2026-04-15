@@ -5,6 +5,48 @@ define do_build_docs
 	$(PYTHON) $(BUILD_DOCS) $(SCRIPTS_OPT) $(BUILD_DOCS_DIR_OPT) --venv $(VENV) --tool_json weave_ci/weave_tools/$1.json
 endef
 
+define do_build_weave_docs
+	# arg1: destination path for built docs
+	@echo "destination path for weave docs: $(1)"
+	mkdir -p $(1)
+	tag=$$(head -n 1 ./version.txt | tr -d '\r\n'); \
+	echo "Using tag: $$tag"; \
+	git fetch origin gh-pages || true; \
+	if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then \
+		git branch -f gh-pages origin/gh-pages || true; \
+	fi; \
+	. $(VENV)/bin/activate && \
+	if echo "$$tag" | grep -Eq '^[0-9]+\.[0-9]+(\.[0-9]+)?$$'; then \
+		echo "Deploying release version $$tag as latest"; \
+		mike deploy "$$tag" latest --update-aliases --push; \
+	else \
+		echo "Deploying non-release version $$tag without latest alias"; \
+		mike deploy "$$tag" --push; \
+	fi && \
+	deactivate; \
+	TMPDIR=$$(mktemp -d); \
+	trap 'git worktree remove --force "$$TMPDIR" 2>/dev/null || true; rm -rf "$$TMPDIR"' EXIT; \
+	echo "Using temp dir: $$TMPDIR"; \
+	git worktree add --force "$$TMPDIR" gh-pages; \
+	rsync -a --delete --exclude '.git' "$$TMPDIR"/ "$(1)"/; \
+	( cd $(1) && \
+	  find . -maxdepth 1 -type l -print0 | \
+	  while IFS= read -r -d '' L; do \
+	    NAME=$${L#./}; \
+	    TGT=$$(readlink "$$NAME" || true); \
+	    case "$$TGT" in \
+	      /*|*..* ) echo "WARN...skipping unsafe symlink $$NAME -> $$TGT"; continue ;; \
+	    esac; \
+	    if [ -d "$$TGT" ]; then \
+	      echo "INFO...dereferencing alias $$NAME -> $$TGT for static hosting"; \
+	      rm -f "$$NAME"; \
+	      cp -a "$$TGT" "$$NAME"; \
+	    fi; \
+	  done \
+	); \
+	git worktree remove --force $$TMPDIR; \
+	rm -rf $$TMPDIR
+endef
 
 define patch_mds
 	sed -i 's|https://maestrowf.readthedocs.io/en/latest/|https://lc.llnl.gov/weave/maestrowf/html/index.html|g' docs/tools.md
@@ -55,10 +97,6 @@ define patch_files_and_build_docs
 	$(call patch_mkdocs_yml)
 	git status
 	cat mkdocs.yml
-	source $(VENV)/bin/activate && \
-	mkdocs build && \
-	mkdir -p build_docs_dir/weave && \
-	ls weave && cp -r weave build_docs_dir/
 endef
 
 define patch_mkdocs_yml
@@ -79,7 +117,7 @@ setup: print_env
 	ls -l weave_ci
 	rm -rf $(VENV)
 	$(CREATE_VENV_SCRIPT) -v latest-stable -e $(VENV)
-	source $(VENV)/bin/activate && pip install $(PKGS) && cd plugins/mkdocs_version_diff && pip install . && pip list && deactivate
+	source $(VENV)/bin/activate && pip install $(PKGS) && cd plugins/mkdocs_version_diff && pip install . && pip install -U mike && pip list && deactivate
 
 build_ibis_docs:
 	$(call do_build_docs,ibis)
@@ -107,6 +145,7 @@ build_studyweaver_docs:
 
 build_docs:
 	$(call patch_files_and_build_docs)
+	$(call do_build_weave_docs,$(CURDIR)/build_docs_dir/weave)
 
 merge_for_push_to_CZ_develop_feature:
 	$(call merge_branch_1_to_branch_2,origin/develop,CZ_develop,push)
