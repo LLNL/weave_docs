@@ -5,24 +5,61 @@ define do_build_docs
 	$(PYTHON) $(BUILD_DOCS) $(SCRIPTS_OPT) $(BUILD_DOCS_DIR_OPT) --venv $(VENV) --tool_json weave_ci/weave_tools/$1.json
 endef
 
+define get_latest_mike_version_py
+python3 - <<'PY'
+from packaging.version import Version
+import subprocess
+
+out = subprocess.check_output(["mike", "list"], text=True)
+versions = []
+
+for line in out.splitlines():
+    s = line.strip()
+    if not s or s.startswith("alias:"):
+        continue
+    name = s.split()[0]
+    if name == "latest":
+        continue
+    try:
+        pv = Version(name)
+        if pv.is_devrelease or not pv.is_prerelease:
+            versions.append((pv, name))
+    except Exception:
+        pass
+
+devs = [(pv, name) for pv, name in versions if pv.is_devrelease]
+stables = [(pv, name) for pv, name in versions if not pv.is_prerelease and not pv.is_devrelease]
+
+chosen = ""
+if devs:
+    chosen = max(devs)[1]
+elif stables:
+    chosen = max(stables)[1]
+
+print(chosen)
+PY
+endef
+
 define do_build_weave_docs
 	# arg1: destination path for built docs
 	@echo "destination path for weave docs: $(1)"
 	mkdir -p $(1)
-	tag=$$(head -n 1 ./version.txt | tr -d '\r\n'); \
+	tag=$$(tr -d '\r\n' < ./version.txt); \
 	echo "Using tag: $$tag"; \
 	git fetch origin gh-pages || true; \
 	if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then \
 		git branch -f gh-pages origin/gh-pages || true; \
 	fi; \
 	. $(VENV)/bin/activate && \
-	if echo "$$tag" | grep -Eq '^[0-9]+\.[0-9]+(\.[0-9]+)?$$'; then \
-		echo "Deploying release version $$tag as latest"; \
-		mike deploy "$$tag" latest --update-aliases --push; \
+	echo "Deploying version $$tag"; \
+	mike deploy "$$tag" --push; \
+	latest_tag=$$($(get_latest_mike_version_py)); \
+	if [ -n "$$latest_tag" ]; then \
+		echo "Setting latest -> $$latest_tag"; \
+		mike alias --update-aliases --push "$$latest_tag" latest; \
 	else \
-		echo "Deploying non-release version $$tag without latest alias"; \
-		mike deploy "$$tag" --push; \
-	fi && \
+		echo "No valid version found for latest alias"; \
+	fi; \
 	deactivate; \
 	TMPDIR=$$(mktemp -d); \
 	trap 'git worktree remove --force "$$TMPDIR" 2>/dev/null || true; rm -rf "$$TMPDIR"' EXIT; \
