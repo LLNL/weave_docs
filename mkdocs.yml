@@ -104,3 +104,4 @@ extra_css:
 extra:
   version:
     provider: mike
+    default: latest
