@@ -5,8 +5,20 @@ define do_build_docs
 	$(PYTHON) $(BUILD_DOCS) $(SCRIPTS_OPT) $(BUILD_DOCS_DIR_OPT) --venv $(VENV) --tool_json weave_ci/weave_tools/$1.json
 endef
 
-define get_latest_mike_version_py
-python3 - <<'PY'
+define do_build_weave_docs
+	# arg1: destination path for built docs
+	@echo "destination path for weave docs: $(1)"
+	mkdir -p "$(1)"
+	tag=$$(tr -d '\r\n' < ./version.txt); \
+	echo "Using tag: $$tag"; \
+	git fetch origin gh-pages || true; \
+	if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then \
+		git branch -f gh-pages origin/gh-pages || true; \
+	fi; \
+	. "$(VENV)/bin/activate" && \
+	echo "Deploying version $$tag"; \
+	mike deploy "$$tag" --push; \
+	latest_tag=$$(python3 - <<'PY'
 from packaging.version import Version
 import subprocess
 
@@ -38,22 +50,7 @@ elif stables:
 
 print(chosen)
 PY
-endef
-
-define do_build_weave_docs
-	# arg1: destination path for built docs
-	@echo "destination path for weave docs: $(1)"
-	mkdir -p $(1)
-	tag=$$(tr -d '\r\n' < ./version.txt); \
-	echo "Using tag: $$tag"; \
-	git fetch origin gh-pages || true; \
-	if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then \
-		git branch -f gh-pages origin/gh-pages || true; \
-	fi; \
-	. $(VENV)/bin/activate && \
-	echo "Deploying version $$tag"; \
-	mike deploy "$$tag" --push; \
-	latest_tag=$$($(get_latest_mike_version_py)); \
+); \
 	if [ -n "$$latest_tag" ]; then \
 		echo "Setting latest -> $$latest_tag"; \
 		mike alias --update-aliases --push "$$latest_tag" latest; \
@@ -66,7 +63,7 @@ define do_build_weave_docs
 	echo "Using temp dir: $$TMPDIR"; \
 	git worktree add --force "$$TMPDIR" gh-pages; \
 	rsync -a --delete --exclude '.git' "$$TMPDIR"/ "$(1)"/; \
-	( cd $(1) && \
+	( cd "$(1)" && \
 	  find . -maxdepth 1 -type l -print0 | \
 	  while IFS= read -r -d '' L; do \
 	    NAME=$${L#./}; \
@@ -81,8 +78,8 @@ define do_build_weave_docs
 	    fi; \
 	  done \
 	); \
-	git worktree remove --force $$TMPDIR; \
-	rm -rf $$TMPDIR
+	git worktree remove --force "$$TMPDIR"; \
+	rm -rf "$$TMPDIR"
 endef
 
 define patch_mds
