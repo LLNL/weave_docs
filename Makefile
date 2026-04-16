@@ -254,9 +254,12 @@ deploy_docs:
 	if [ -e $(DOCS_DIR)/StudyWeaver/latest ] && [ ! -d $(DOCS_DIR)/StudyWeaver/latest ]; then rm -f $(DOCS_DIR)/StudyWeaver/latest; fi
 	rsync -a --delete build_docs_dir/StudyWeaver/ $(DOCS_DIR)/StudyWeaver/
 	cp -pr build_docs_dir/merlin $(DOCS_DIR)
-	cp -pr build_docs_dir/weave/* $(DOCS_DIR)
-	rm -rf build_docs_dir
+	#cp -pr build_docs_dir/weave/* $(DOCS_DIR)
+	if [ -e $(DOCS_DIR)/weave/latest ] && [ ! -d $(DOCS_DIR)/weave/latest ]; then rm -f $(DOCS_DIR)/weave/latest; fi
+	rsync -a --delete build_docs_dir/weave/* $(DOCS_DIR)
+	cp -pr build_docs_dir/merlin $(DOCS_DIR)
 	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)
+	rm -rf build_docs_dir
 
 deploy_docs_cz:
 	mkdir -p $(DOCS_DIR)
