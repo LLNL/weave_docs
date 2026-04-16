@@ -255,7 +255,7 @@ deploy_docs:
 	rsync -a --delete build_docs_dir/StudyWeaver/ $(DOCS_DIR)/StudyWeaver/
 	cp -pr build_docs_dir/merlin $(DOCS_DIR)
 	#cp -pr build_docs_dir/weave/* $(DOCS_DIR)
-	if [ -e $(DOCS_DIR)/weave/latest ] && [ ! -d $(DOCS_DIR)/weave/latest ]; then rm -f $(DOCS_DIR)/weave/latest; fi
+	if [ -e $(DOCS_DIR)/latest ] && [ ! -d $(DOCS_DIR)/latest ]; then rm -f $(DOCS_DIR)/latest; fi
 	rsync -a --delete build_docs_dir/weave/* $(DOCS_DIR)
 	cp -pr build_docs_dir/merlin $(DOCS_DIR)
 	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)
