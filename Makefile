@@ -259,4 +259,4 @@ deploy_docs:
 	rsync -a --delete build_docs_dir/weave/* $(DOCS_DIR)
 	cp -pr build_docs_dir/merlin $(DOCS_DIR)
 	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)
-	rm -rf build_docs_dir
+#	rm -rf build_docs_dir
