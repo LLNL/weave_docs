@@ -260,16 +260,3 @@ deploy_docs:
 	cp -pr build_docs_dir/merlin $(DOCS_DIR)
 	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)
 	rm -rf build_docs_dir
-
-deploy_docs_cz:
-	mkdir -p $(DOCS_DIR)
-	cp -pr build_docs_dir/maestrowf $(DOCS_DIR)
-	cp -pr build_docs_dir/pydv $(DOCS_DIR)
-	cp -pr build_docs_dir/Sina $(DOCS_DIR)
-	cp -pr build_docs_dir/kosh $(DOCS_DIR)
-	cp -pr build_docs_dir/trata $(DOCS_DIR)
-	cp -pr build_docs_dir/ibis $(DOCS_DIR)
-	cp -pr build_docs_dir/merlin $(DOCS_DIR)
-	cp -pr build_docs_dir/weave/* $(DOCS_DIR)
-	rm -rf build_docs_dir
-	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)
