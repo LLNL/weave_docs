@@ -115,7 +115,7 @@ define deploy_docs_for
 	if [ "$(1)" == "weave" ]; then \
 		mv $(DOCS_DIR)/$(1)/index.html $(DOCS_DIR)/index.html; \
 	fi
-ened
+endef
 
 print_env:
 	echo "WORKSPACE: $(WORKSPACE)"
