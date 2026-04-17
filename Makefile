@@ -105,6 +105,18 @@ define patch_mkdocs_yml
 	$(UPDATE_MKDOCS)
 endef
 
+define deploy_docs_for
+	# arg1: tool name
+	# Mike may have previously published alias dirs (e.g. latest/) as symlinks, which many
+	# static hosts won't serve and which `cp -r` can't overwrite with a real directory.
+	mkdir -p $(DOCS_DIR)/$(1)
+	if [ -e $(DOCS_DIR)/$(1)/latest ] && [ ! -d $(DOCS_DIR)/$(1)/latest ]; then rm -f $(DOCS_DIR)/$(1)/latest; fi
+	rsync -a --delete build_docs_dir/$(1)/ $(DOCS_DIR)/$(1)/
+	if [ "$(1)" == "weave" ]; then \
+		mv $(DOCS_DIR)/$(1)/index.html $(DOCS_DIR)/index.html; \
+	fi
+ened
+
 print_env:
 	echo "WORKSPACE: $(WORKSPACE)"
 	echo "WORKDIR: $(WORKDIR)"
@@ -248,16 +260,8 @@ deploy_docs:
 	cp -pr build_docs_dir/kosh $(DOCS_DIR)
 	cp -pr build_docs_dir/trata $(DOCS_DIR)
 	cp -pr build_docs_dir/ibis $(DOCS_DIR)
-	mkdir -p $(DOCS_DIR)/StudyWeaver
-	# Mike may have previously published alias dirs (e.g. latest/) as symlinks, which many
-	# static hosts won't serve and which `cp -r` can't overwrite with a real directory.
-	if [ -e $(DOCS_DIR)/StudyWeaver/latest ] && [ ! -d $(DOCS_DIR)/StudyWeaver/latest ]; then rm -f $(DOCS_DIR)/StudyWeaver/latest; fi
-	rsync -a --delete build_docs_dir/StudyWeaver/ $(DOCS_DIR)/StudyWeaver/
 	cp -pr build_docs_dir/merlin $(DOCS_DIR)
-	#cp -pr build_docs_dir/weave/* $(DOCS_DIR)
-	if [ -e $(DOCS_DIR)/latest ] && [ ! -d $(DOCS_DIR)/latest ]; then rm -f $(DOCS_DIR)/latest; fi
-	rsync -a --delete build_docs_dir/weave/* $(DOCS_DIR)/weave
-	mv $(DOCS_DIR)/weave/index.html $(DOCS_DIR)/index.html
-	cp -pr build_docs_dir/merlin $(DOCS_DIR)
+	$(call deploy_docs_for,StudyWeaver)
+	$(call deploy_docs_for,weave)
 	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)
 #	rm -rf build_docs_dir
