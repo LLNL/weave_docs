@@ -256,7 +256,7 @@ deploy_docs:
 	cp -pr build_docs_dir/merlin $(DOCS_DIR)
 	#cp -pr build_docs_dir/weave/* $(DOCS_DIR)
 	if [ -e $(DOCS_DIR)/latest ] && [ ! -d $(DOCS_DIR)/latest ]; then rm -f $(DOCS_DIR)/latest; fi
-	rsync -a --delete build_docs_dir/weave/* $(DOCS_DIR)
+	rsync -a --delete build_docs_dir/weave/* $(DOCS_DIR)/weave
 	cp -pr build_docs_dir/merlin $(DOCS_DIR)
 	chgrp -R $(DOCS_GROUP) $(DOCS_DIR)
 #	rm -rf build_docs_dir
