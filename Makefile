@@ -113,7 +113,7 @@ define deploy_docs_for
 	if [ -e $(DOCS_DIR)/$(1)/latest ] && [ ! -d $(DOCS_DIR)/$(1)/latest ]; then rm -f $(DOCS_DIR)/$(1)/latest; fi
 	rsync -a --delete build_docs_dir/$(1)/ $(DOCS_DIR)/$(1)/
 	if [ "$(1)" == "weave" ]; then \
-		mv $(DOCS_DIR)/$(1)/index.html $(DOCS_DIR)/index.html; \
+		cp index.html $(DOCS_DIR)/index.html; \
 	fi
 endef
 
