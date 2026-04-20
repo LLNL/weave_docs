@@ -5,9 +5,6 @@ site_dir: weave
 
 plugins:
   - search
-  - version-diff:
-      enabled: true
-      button_text: "📄⬅️🆚➡️📄 Compare Versions"
     
 nav:
   - General:
@@ -100,8 +97,3 @@ extra_javascript:
 extra_css:
   # Additional Custom CSS
   - css/custom_css/custom.css
-
-extra:
-  version:
-    provider: mike
-    default: latest
