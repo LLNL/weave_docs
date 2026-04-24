@@ -5,6 +5,22 @@ define do_build_docs
 	$(PYTHON) $(BUILD_DOCS) $(SCRIPTS_OPT) $(BUILD_DOCS_DIR_OPT) --venv $(VENV) --tool_json weave_ci/weave_tools/$1.json
 endef
 
+#
+# do_build_weave_docs
+#   read the version tag from version.txt
+#   fetch remove gh-pages
+#   creates or updates (if exists) a local gh-pages branch from origin/gh-pages
+#   in activated venv, do:
+#      mike deploy _version_tag_ --push -> this publishes docs for the specified version
+#      run utils/get_latest_mike_version.py -> determine the latest version
+#      if latest version exists, updates latest alias with 'mike alias ...'
+#
+#   Add a git worktree for the gh-pages branch into a temporary directory.
+#   Copy content of gh-pages using rsync into destination path
+#     in the destination, finds top-level symlink and replaces directory symlinks
+#     with real copied directories.
+# 
+
 define do_build_weave_docs
 	# arg1: destination path for built docs
 	@echo "destination path for weave docs: $(1)"
@@ -130,7 +146,7 @@ setup: print_env
 	git clone -b develop $(WEAVE_CI_URL)
 	ls -l weave_ci
 	rm -rf $(VENV)
-	$(CREATE_VENV_SCRIPT) -v latest-stable -e $(VENV)
+	$(CREATE_VENV_SCRIPT) -v latest-develop -e $(VENV)
 	source $(VENV)/bin/activate && pip install $(PKGS) && cd plugins/mkdocs_version_diff && pip install . && pip install -U mike && pip list && deactivate
 
 build_ibis_docs:
