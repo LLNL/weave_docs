@@ -138,16 +138,17 @@ print_env:
 	echo "WORKDIR: $(WORKDIR)"
 	echo "VENV: $(VENV)"
 
+.PHONY: setup
+.ONESHELL:
 setup: print_env
 	mkdir -p build_docs_dir
 	mkdir -p $(WORKDIR)
-	cd $(WORKDIR)
 	rm -rf weave_ci
 	git clone -b develop $(WEAVE_CI_URL)
 	ls -l weave_ci
 	rm -rf $(VENV)
 	$(CREATE_VENV_SCRIPT) -v latest-develop -e $(VENV)
-	source $(VENV)/bin/activate && pip install $(PKGS) && cd plugins/mkdocs_version_diff && pip install . && pip install -U mike && pip list && deactivate
+	source $(VENV)/bin/activate && pip install $(PKGS) && pip list && deactivate
 
 build_ibis_docs:
 	$(call do_build_docs,ibis)
