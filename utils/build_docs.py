@@ -45,6 +45,8 @@ def add_cp_html_cmd(repo_project, build_docs_dir, cmds_list):
 
     add_cmd = "mkdir -p {}/{}".format(build_docs_dir, repo_project)
     cmds_list.insert(0, add_cmd)
+    set_venv_cmd = "export VENV={}".format(venv)
+    cmds_list.insert(0, set_venv_cmd)
 
     for i in range(1,len(cmds_list)):
         cmd = cmds_list[i]
@@ -70,30 +72,12 @@ def add_cp_html_cmd(repo_project, build_docs_dir, cmds_list):
                                                                repo_project)
             cmds_list[i] = cmds_list[i] + add_cmd
             break
-        elif 'mike deploy' in cmd:
+        elif 'make build_docs_with_mike' in cmd:
             version_cmd = r"grep '^version *= *\"' pyproject.toml | sed -E 's/^[^\"]*\"([^\"]*)\".*/\1/'"
-            # Preserve any additional mike deploy flags (e.g. --branch, --rebase),
-            # but always supply the version/aliases and --push ourselves.
-            mike_cmd = cmd.strip()
-            m = re.match(r'^cd\\s+\\S+\\s+&&\\s+(.+)$', mike_cmd)
-            if m:
-                mike_cmd = m.group(1).strip()
-            mike_opts = ""
-            if mike_cmd.startswith("mike deploy"):
-                mike_opts = mike_cmd[len("mike deploy"):].strip()
-            push_flag = "" if "--push" in mike_opts.split() else " --push"
-
             export_cmd = (
-                "REPO_ROOT=$(git rev-parse --show-toplevel)"
+                " && REPO_ROOT=$(git rev-parse --show-toplevel)"
                 " && cd \"${REPO_ROOT}\""
-                " && (python -c \"import pkgutil; import markdown; raise SystemExit(0 if pkgutil.find_loader('markdown.extensions.toc') else 1)\""
-                "     || python -m pip install -U Markdown)"
-                " && git fetch origin gh-pages || true"
-                " && (git show-ref --verify --quiet refs/remotes/origin/gh-pages"
-                "     && git branch -f gh-pages origin/gh-pages || true)"
                 f" && VERSION=$({version_cmd})"
-                ' && echo "INFO...mike deploy version=${VERSION}"'
-                f' && mike deploy {mike_opts}{push_flag} "${{VERSION}}" latest --update-aliases'
                 " && TMPDIR=$(mktemp -d)"
                 ' && git worktree add --force "${TMPDIR}" gh-pages'
                 f" && rsync -a --delete --exclude '.git' \"${{TMPDIR}}\"/ {build_docs_dir}/{repo_project}/"
@@ -118,7 +102,7 @@ def add_cp_html_cmd(repo_project, build_docs_dir, cmds_list):
                 ' && git worktree remove --force "${TMPDIR}"'
                 ' && rm -rf "${TMPDIR}"'
             )
-            cmds_list[i] = export_cmd
+            cmds_list[i] = cmds_list[i] + export_cmd
             break
         
     print("cmds_list: ", cmds_list)

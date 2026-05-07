@@ -102,15 +102,18 @@ def run_cmd_in_venv(cmd, venv, cwd=None):
       ret: 0 for SUCCESS, 1 for FAILURE
       cmd_output: a list of command output lines.
     """
-    
+
+    set_venv_cmd = "export VENV={}".format(venv)
     activate_cmd = "source {}/bin/activate".format(venv)
     if cwd:
-        the_cmd = "{} && cd {} && {} && deactivate".format(activate_cmd,
-                                                           cwd,
-                                                           cmd)
+        the_cmd = "{} && {} && cd {} && {}".format(activate_cmd,
+                                                   set_venv_cmd,
+                                                   cwd,
+                                                   cmd)
     else:
-        the_cmd = "{} && {} && deactivate".format(activate_cmd,
-                                                  cmd)
+        the_cmd = "{} && {} && {}".format(activate_cmd,
+                                          set_venv_cmd,
+                                          cmd)
     ret, cmd_output = run_cmd_capture_output(the_cmd, shell_cmd=True,
                                              verbose=True, cwd=cwd) 
     return ret, cmd_output
