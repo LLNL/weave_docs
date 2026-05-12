@@ -78,7 +78,7 @@ define patch_mds
 	if [ $(SOURCE_ZONE) == RZ ]; then \
 		cd docs; \
 		find . -type f -name '*.md' | xargs  sed -i 's|https://lc.llnl.gov|https://rzlc.llnl.gov|g'; \
-		cd ../..; \
+		cd ..; \
 	fi
 endef
 
