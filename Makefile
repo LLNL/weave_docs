@@ -2,7 +2,7 @@ include vars.mk
 
 define do_build_docs
 	# arg1: repo_name
-	$(PYTHON) $(BUILD_DOCS) $(SCRIPTS_OPT) $(BUILD_DOCS_DIR_OPT) --venv $(VENV) --tool_json weave_ci/weave_tools/$1.json
+	$(PYTHON) $(BUILD_DOCS) $(SCRIPTS_OPT) $(BUILD_DOCS_DIR_OPT) --venv $(VENV) --tool_json $(WORKDIR)/weave_ci/weave_tools/$1.json
 endef
 
 #
@@ -143,9 +143,9 @@ print_env:
 setup: print_env
 	mkdir -p build_docs_dir
 	mkdir -p $(WORKDIR)
+	cd $(WORKDIR)
 	rm -rf weave_ci
 	git clone -b develop $(WEAVE_CI_URL)
-	ls -l weave_ci
 	rm -rf $(VENV)
 	$(CREATE_VENV_SCRIPT) -v latest-develop -e $(VENV)
 	source $(VENV)/bin/activate && pip install $(PKGS) && pip list && deactivate
