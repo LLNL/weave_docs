@@ -67,7 +67,7 @@ VENV = $(WORKDIR)/weave_docs_venv
 PKGS = sphinx_immaterial termynal poetry lxml_html_clean griffe mkdocs-mermaid2-plugin
 
 BUILD_DOCS = utils/build_docs.py
-VARS_JSON = --vars_json weave_ci/weave_tools/vars.json
+VARS_JSON = --vars_json $(WORKDIR)/weave_ci/weave_tools/vars.json
 
 #PLATFORM := $(shell echo $(SYS_TYPE) | cut -b 1-6)
 #PLATFORM_OPT = --platform $(PLATFORM)
