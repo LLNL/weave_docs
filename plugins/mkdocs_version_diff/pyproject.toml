@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mkdocs-version-diff"
+version = "1.0.0"
+dependencies = ["mkdocs>=1.0.0",
+                "mike",
+                "mkdocs-macros-plugin",
+                "mkdocs-material",
+                "mkdocs-codeinclude-plugin",
+                "mkdocs-gen-files",
+                "mkdocstrings",
+                "mkdocs-literate-nav",
+                "mkdocstrings[python]",
+                "ansi2html",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mkdocs_version_diff", "mkdocs_version_diff.*" ]
+
+
+[project.entry-points."mkdocs.plugins"]
+version-diff = "mkdocs_version_diff.plugin:VersionDiffPlugin"

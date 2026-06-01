@@ -31,3 +31,15 @@ An extension of the Ball Bounce demo that generates ensembles of runs in order t
 ## [Pyranda Rayleigh-Taylor](pyranda_rayleigh_taylor)
 
 Originally an Amazon Web Services demo, this tutorial shows how to run an ensemble of Rayleigh-Taylor simulations for a physics code (Pyranda). It shows how to run the ensembles, keep track of what was ran and run some UQ post-processing.
+
+## [Digit Classification Machine Learning](digit_classification)
+
+This tutorial will use Machine Learning to classify handwritten digits from the following dataset: [Optical Recognition of Handwritten Digits](https://archive.ics.uci.edu/dataset/80/optical+recognition+of+handwritten+digits). This will showcase the use of Kosh Loaders which can read any type of data.
+
+## [Decision Trees](decision_trees)
+
+This tutorial will use Machine Learning decision trees for classification and regression. This will showcase the use of Kosh Ensembles to group different types of data together.
+
+## [Pyranda Deep Learning](pyranda_deep_learning)
+
+Expands on the Pyranda Rayleigh Taylor tutorial workflow and modifies it to use deep learning to train a 2D LSTM CNN model on Pyranda 2D Simulation data. It will use Tensorflow and Keras as the deep learning software and Maestro as the orechestration software.

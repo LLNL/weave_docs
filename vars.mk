@@ -40,7 +40,7 @@ tools_dir = develop
 
 WORKSPACE = /usr/workspace/weaveci/weave
 WORKDIR = $(WORKSPACE)/workdir
-SPACK_VERSION = 0.20
+SPACK_VERSION = 1.1.0
 SPACK_CORE_ENV_DIR = $(WORKSPACE)/repos/spack_core_environment/$(SPACK_VERSION)/spack_core_environment
 MACHINE = $(LCSCHEDCLUSTER)
 PYTHON = python3
@@ -64,18 +64,18 @@ endif
 #
 CREATE_VENV_SCRIPT = /usr/apps/weave/tools/create_venv.sh
 VENV = $(WORKDIR)/weave_docs_venv
-PKGS = sphinx_immaterial termynal
+PKGS = sphinx_immaterial termynal poetry lxml_html_clean griffe mkdocs-mermaid2-plugin
 
 BUILD_DOCS = utils/build_docs.py
-VARS_JSON = --vars_json weave_ci/weave_tools/vars.json
+VARS_JSON = --vars_json $(WORKDIR)/weave_ci/weave_tools/vars.json
 
-PLATFORM := $(shell echo $(SYS_TYPE) | cut -b 1-6)
-PLATFORM_OPT = --platform $(PLATFORM)
+#PLATFORM := $(shell echo $(SYS_TYPE) | cut -b 1-6)
+#PLATFORM_OPT = --platform $(PLATFORM)
 ZONE_OPT = --zone $(ZONE)
 WORKDIR_OPT = --workdir $(REPOS_DIR)
 
 BUILD_DOCS_DIR_OPT = --build_docs_dir `pwd`/build_docs_dir
-SCRIPTS_OPT = $(VARS_JSON) $(WORKDIR_OPT) $(ZONE_OPT) $(PLATFORM_OPT)
+SCRIPTS_OPT = $(VARS_JSON) $(WORKDIR_OPT) $(ZONE_OPT)
 
 LLNL_DOCS_MDS= tools.md environment.md badging.md
 

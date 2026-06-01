@@ -12,7 +12,7 @@ stages:
 .on_toss4_cpu_cz:
   tags:
     - shell
-    - ruby
+    - dane
 
 .on_toss4_cpu_rz:
   variables:
@@ -32,34 +32,34 @@ stages:
  
 .run_on_rz:
   rules:
-    - if: $SOURCE_ZONE == "RZ" && $CI_PIPELINE_SOURCE != "merge_request_event"
+    - if: $SOURCE_ZONE == "RZ" && $CI_PIPELINE_SOURCE != "merge_request_event" && ($CI_COMMIT_BRANCH =~ /^RZ_develop-feature-*/ || $CI_COMMIT_BRANCH == "RZ_develop" || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH =~ /^develop-feature-*/ )
 
 .run_on_scf:
   rules:
-    - if: $SOURCE_ZONE == "SCF" && $CI_PIPELINE_SOURCE != "merge_request_event"    
+    - if: $SOURCE_ZONE == "SCF" && $CI_PIPELINE_SOURCE != "merge_request_event" && ($CI_COMMIT_BRANCH =~ /^SCF_develop-feature-*/ || $CI_COMMIT_BRANCH == "SCF_develop" || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH =~ /^develop-feature-*/ )   
 
-.merge_for_push_to_zone_develop_feature_cz:
+.merge_for_push_to_CZ_develop_feature:
   rules:
     - if: $SOURCE_ZONE == "CZ" && $CI_COMMIT_BRANCH =~ /^CZ_develop-feature-*/
-      when: always
+      when: on_success
     - when: never
 
-.merge_for_push_to_zone_develop_cz:
+.merge_for_push_to_CZ_develop:
   rules:
     - if: $SOURCE_ZONE == "CZ" && $CI_COMMIT_BRANCH == "CZ_develop"
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_develop_cz:
   rules:
     - if: $SOURCE_ZONE == "CZ" && $CI_COMMIT_BRANCH == "develop"
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_develop_feature_cz:
   rules:
     - if: $SOURCE_ZONE == "CZ" && $CI_COMMIT_BRANCH =~ /^develop-feature-/
-      when: always
+      when: on_success
     - when: never
 
 .do_deploy_cz:
@@ -68,28 +68,28 @@ stages:
       when: on_success
     - when: never    
     
-.merge_for_push_to_zone_develop_feature_rz:
+.merge_for_push_to_RZ_develop_feature:
   rules:
     - if: $SOURCE_ZONE == "RZ" && $CI_COMMIT_BRANCH =~ /^RZ_develop-feature-*/
-      when: always
+      when: on_success
     - when: never
 
-.merge_for_push_to_zone_develop_rz:
+.merge_for_push_to_RZ_develop:
   rules:
     - if: $SOURCE_ZONE == "RZ" && $CI_COMMIT_BRANCH == "RZ_develop"
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_develop_rz:
   rules:
     - if: $SOURCE_ZONE == "RZ" && $CI_COMMIT_BRANCH == "develop"
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_develop_feature_rz:
   rules:
     - if: $SOURCE_ZONE == "RZ" && $CI_COMMIT_BRANCH =~ /^develop-feature-/
-      when: always
+      when: on_success
     - when: never
 
 .do_deploy_rz:
@@ -98,28 +98,28 @@ stages:
       when: on_success
     - when: never
         
-.merge_for_push_to_zone_develop_feature_scf:
+.merge_for_push_to_SCF_develop_feature:
   rules:
     - if: $SOURCE_ZONE == "SCF" && $CI_COMMIT_BRANCH =~ /^SCF_develop-feature-*/
-      when: always
+      when: on_success
     - when: never
 
-.merge_for_push_to_zone_develop_scf:
+.merge_for_push_to_SCF_develop:
   rules:
     - if: $SOURCE_ZONE == "SCF" && $CI_COMMIT_BRANCH == "SCF_develop"
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_develop_scf:
   rules:
     - if: $SOURCE_ZONE == "SCF" && $CI_COMMIT_BRANCH == "develop"
-      when: always
+      when: on_success
     - when: never
 
 .merge_for_push_to_develop_feature_scf:
   rules:
     - if: $SOURCE_ZONE == "SCF" && $CI_COMMIT_BRANCH =~ /^develop-feature-/
-      when: always
+      when: on_success
     - when: never
 
 .do_deploy_scf:
@@ -171,86 +171,81 @@ stages:
   script:
     - make build_trata_docs
 
+.build_studyweaver_docs:
+  stage: build_tools_docs
+  script:
+    - make build_studyweaver_docs
+    
 #
 # CZ
 #
-
-.build_weave_docs_push_to_zone_feature:
+.build_weave_docs_push_to_CZ_develop_feature:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_zone_feature
     - make build_docs
 
-.build_weave_docs_push_to_zone:
+.build_weave_docs_push_to_CZ_develop:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_zone
     - make build_docs
 
-.build_weave_docs_push_to_target_feature:
+.build_weave_docs_push_to_develop_feature_cz:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_target_feature
     - make build_docs
 
-.build_weave_docs_push_to_target:
+.build_weave_docs_push_to_develop_cz:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_target_branch
+    - make merge_for_push_to_develop_cz
     - make build_docs
 
 #
 # RZ
 #
-.build_weave_docs_push_to_zone_feature_rz:
+.build_weave_docs_push_to_RZ_develop_feature:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_zone_feature_rz
     - make build_docs
 
-.build_weave_docs_push_to_zone_rz:
+.build_weave_docs_push_to_RZ_develop:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_zone_rz
     - make build_docs
 
-.build_weave_docs_push_to_target_feature_rz:
+.build_weave_docs_push_to_develop_feature_rz:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_target_feature_rz
     - make build_docs
 
-.build_weave_docs_push_to_target_rz:
+.build_weave_docs_push_to_develop_rz:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_target_branch_rz
+    - make merge_for_push_to_develop_rz
     - make build_docs
 
 #
 # SCF
 #
-.build_weave_docs_push_to_zone_feature_scf:
+.build_weave_docs_push_to_SCF_develop_feature:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_zone_feature_scf
     - make build_docs
 
-.build_weave_docs_push_to_zone_scf:
+.build_weave_docs_push_to_SCF_develop:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_zone_scf
     - make build_docs
 
-.build_weave_docs_push_to_target_feature_scf:
+.build_weave_docs_push_to_develop_feature_scf:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_target_feature_scf
     - make build_docs
 
-.build_weave_docs_push_to_target_scf:
+.build_weave_docs_push_to_develop_scf:
   stage: build_weave_docs
   script:
-    - make merge_for_push_to_target_branch_scf
+    - make merge_for_push_to_develop_scf
     - make build_docs
 
 .deploy:
@@ -320,57 +315,115 @@ build_trata_docs_cz:
     paths:
       - build_docs_dir/trata
 
-build_weave_docs_push_to_zone_develop_feature_cz:
-  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
-  dependencies: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
-  extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_zone_develop_feature_cz, .build_weave_docs_push_to_zone_feature ]
+build_studyweaver_docs_cz:
+  needs: [ setup_cz ]
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .build_studyweaver_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/StudyWeaver
+
+
+build_weave_docs_push_to_CZ_develop_feature:
+  needs:
+    - job: build_ibis_docs_cz
+      artifacts: true
+    - job: build_kosh_docs_cz
+      artifacts: true
+    - job: build_maestrowf_docs_cz
+      artifacts: true
+    - job: build_merlin_docs_cz
+      artifacts: true
+    - job: build_pydv_docs_cz
+      artifacts: true
+    - job: build_sina_docs_cz
+      artifacts: true
+    - job: build_trata_docs_cz
+      artifacts: true
+    - job: build_studyweaver_docs_cz
+      artifacts: true
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_CZ_develop_feature, .build_weave_docs_push_to_CZ_develop_feature ]
   artifacts:
     paths:
       - docs
       - build_docs_dir
 
-build_weave_docs_push_to_zone_develop_cz:
-  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
-  dependencies: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
-  extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_zone_develop_cz, .build_weave_docs_push_to_zone ]
+build_weave_docs_push_to_CZ_develop:
+  needs:
+    - job: build_ibis_docs_cz
+      artifacts: true
+    - job: build_kosh_docs_cz
+      artifacts: true
+    - job: build_maestrowf_docs_cz
+      artifacts: true
+    - job: build_merlin_docs_cz
+      artifacts: true
+    - job: build_pydv_docs_cz
+      artifacts: true
+    - job: build_sina_docs_cz
+      artifacts: true
+    - job: build_trata_docs_cz
+      artifacts: true
+    - job: build_studyweaver_docs_cz
+      artifacts: true
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_CZ_develop, .build_weave_docs_push_to_CZ_develop ]
   artifacts:
     paths:
       - docs
       - build_docs_dir
 
 build_weave_docs_push_to_develop_feature_cz:
-  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
-  dependencies: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
-  extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_develop_feature_cz, .build_weave_docs_push_to_target_feature ]
+  needs:
+    - job: build_ibis_docs_cz
+      artifacts: true
+    - job: build_kosh_docs_cz
+      artifacts: true
+    - job: build_maestrowf_docs_cz
+      artifacts: true
+    - job: build_merlin_docs_cz
+      artifacts: true
+    - job: build_pydv_docs_cz
+      artifacts: true
+    - job: build_sina_docs_cz
+      artifacts: true
+    - job: build_trata_docs_cz
+      artifacts: true
+    - job: build_studyweaver_docs_cz
+      artifacts: true
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_develop_feature_cz, .build_weave_docs_push_to_develop_feature_cz ]
   artifacts:
     paths:
       - docs
       - build_docs_dir
 
 build_weave_docs_push_to_develop_cz:
-  needs: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
-  dependencies: [ build_ibis_docs_cz, build_kosh_docs_cz, build_maestrowf_docs_cz, build_merlin_docs_cz, build_pydv_docs_cz, build_sina_docs_cz, build_trata_docs_cz ]
-  extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_develop_cz, .build_weave_docs_push_to_target ]
+  needs:
+    - job: build_ibis_docs_cz
+      artifacts: true
+    - job: build_kosh_docs_cz
+      artifacts: true
+    - job: build_maestrowf_docs_cz
+      artifacts: true
+    - job: build_merlin_docs_cz
+      artifacts: true
+    - job: build_pydv_docs_cz
+      artifacts: true
+    - job: build_sina_docs_cz
+      artifacts: true
+    - job: build_trata_docs_cz
+      artifacts: true
+    - job: build_studyweaver_docs_cz
+      artifacts: true
+  extends: [ .on_toss4_cpu_cz, .run_on_cz, .merge_for_push_to_develop_cz, .build_weave_docs_push_to_develop_cz ]
   artifacts:
     paths:
       - docs
       - build_docs_dir
 
-#deploy_docs_cz:
-#  needs:
-#    - job: build_weave_docs_push_to_zone_develop_feature_cz
-#      optional: true
-#    - job: build_weave_docs_push_to_zone_develop_cz
-#      optional: true
-#    - job: build_weave_docs_push_to_develop_feature_cz
-#      optional: true
-#    - job: build_weave_docs_push_to_develop_cz
-#      optional: true
-#  extends: [ .on_toss4_cpu_cz, .run_on_cz, .deploy ]
 
 deploy_docs_cz:
   needs:
     - job: build_weave_docs_push_to_develop_cz
+      optional: false
   extends: [ .on_toss4_cpu_cz, .run_on_cz, .do_deploy_cz, .deploy ]
 
 #
@@ -435,57 +488,113 @@ build_trata_docs_rz:
     paths:
       - build_docs_dir/trata
 
-build_weave_docs_push_to_zone_develop_feature_rz:
-  needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
-  dependencies: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
-  extends: [ .on_toss4_cpu_rz, .run_on_rz, .merge_for_push_to_zone_develop_feature_rz, .build_weave_docs_push_to_zone_feature_rz ]
+build_studyweaver_docs_rz:
+  needs: [ setup_rz ]
+  extends: [ .on_toss4_cpu_rz, .run_on_rz, .build_studyweaver_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/StudyWeaver
+
+build_weave_docs_push_to_RZ_develop_feature:
+  needs:
+    - job: build_ibis_docs_rz
+      artifacts: true
+    - job: build_kosh_docs_rz
+      artifacts: true
+    - job: build_maestrowf_docs_rz
+      artifacts: true
+    - job: build_merlin_docs_rz
+      artifacts: true
+    - job: build_pydv_docs_rz
+      artifacts: true
+    - job: build_sina_docs_rz
+      artifacts: true
+    - job: build_trata_docs_rz
+      artifacts: true
+    - job: build_studyweaver_docs_rz
+      artifacts: true    
+  extends: [ .on_toss4_cpu_rz, .run_on_rz, .merge_for_push_to_RZ_develop_feature, .build_weave_docs_push_to_RZ_develop_feature ]
   artifacts:
     paths:
       - docs
       - build_docs_dir
 
-build_weave_docs_push_to_zone_develop_rz:
-  needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
-  dependencies: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
-  extends: [ .on_toss4_cpu_rz, .run_on_rz, .merge_for_push_to_zone_develop_rz, .build_weave_docs_push_to_zone_rz ]
+build_weave_docs_push_to_RZ_develop:
+  needs:
+    - job: build_ibis_docs_rz
+      artifacts: true
+    - job: build_kosh_docs_rz
+      artifacts: true
+    - job: build_maestrowf_docs_rz
+      artifacts: true
+    - job: build_merlin_docs_rz
+      artifacts: true
+    - job: build_pydv_docs_rz
+      artifacts: true
+    - job: build_sina_docs_rz
+      artifacts: true
+    - job: build_trata_docs_rz
+      artifacts: true
+    - job: build_studyweaver_docs_rz
+      artifacts: true
+  extends: [ .on_toss4_cpu_rz, .run_on_rz, .merge_for_push_to_RZ_develop, .build_weave_docs_push_to_RZ_develop ]
   artifacts:
     paths:
       - docs
       - build_docs_dir
 
 build_weave_docs_push_to_develop_feature_rz:
-  needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
-  dependencies: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
-  extends: [ .on_toss4_cpu_rz, .run_on_rz, .merge_for_push_to_develop_feature_rz, .build_weave_docs_push_to_target_feature_rz ]
+  needs:
+    - job: build_ibis_docs_rz
+      artifacts: true
+    - job: build_kosh_docs_rz
+      artifacts: true
+    - job: build_maestrowf_docs_rz
+      artifacts: true
+    - job: build_merlin_docs_rz
+      artifacts: true
+    - job: build_pydv_docs_rz
+      artifacts: true
+    - job: build_sina_docs_rz
+      artifacts: true
+    - job: build_trata_docs_rz
+      artifacts: true
+    - job: build_studyweaver_docs_rz
+      artifacts: true
+  extends: [ .on_toss4_cpu_rz, .run_on_rz, .merge_for_push_to_develop_feature_rz, .build_weave_docs_push_to_develop_feature_rz ]
   artifacts:
     paths:
       - docs
       - build_docs_dir
 
 build_weave_docs_push_to_develop_rz:
-  needs: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
-  dependencies: [ build_ibis_docs_rz, build_kosh_docs_rz, build_maestrowf_docs_rz, build_merlin_docs_rz, build_pydv_docs_rz, build_sina_docs_rz, build_trata_docs_rz ]
-  extends: [ .on_toss4_cpu_rz, .run_on_rz, .merge_for_push_to_develop_rz, .build_weave_docs_push_to_target_rz ]
+  needs:
+    - job: build_ibis_docs_rz
+      artifacts: true
+    - job: build_kosh_docs_rz
+      artifacts: true
+    - job: build_maestrowf_docs_rz
+      artifacts: true
+    - job: build_merlin_docs_rz
+      artifacts: true
+    - job: build_pydv_docs_rz
+      artifacts: true
+    - job: build_sina_docs_rz
+      artifacts: true
+    - job: build_trata_docs_rz
+      artifacts: true
+    - job: build_studyweaver_docs_rz
+      artifacts: true
+  extends: [ .on_toss4_cpu_rz, .run_on_rz, .merge_for_push_to_develop_rz, .build_weave_docs_push_to_develop_rz ]
   artifacts:
     paths:
       - docs
       - build_docs_dir
 
-#deploy_docs_rz:
-#  needs:
-#    - job: build_weave_docs_push_to_zone_develop_feature_rz
-#      optional: true
-#    - job: build_weave_docs_push_to_zone_develop_rz
-#      optional: true
-#    - job: build_weave_docs_push_to_develop_feature_rz
-#      optional: true
-#    - job: build_weave_docs_push_to_develop_rz
-#      optional: true
-#  extends: [ .on_toss4_cpu_rz, .run_on_rz, .deploy ]
- 
 deploy_docs_rz:
   needs:
     - job: build_weave_docs_push_to_develop_rz
+      optional: false 
   extends: [ .on_toss4_cpu_rz, .run_on_rz, .do_deploy_rz, .deploy ]
 
 #
@@ -550,55 +659,111 @@ build_trata_docs_scf:
     paths:
       - build_docs_dir/trata
 
-build_weave_docs_push_to_zone_develop_feature_scf:
-  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
-  dependencies: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
-  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_zone_develop_feature_scf, .build_weave_docs_push_to_zone_feature_scf ]
+build_studyweaver_docs_scf:
+  needs: [ setup_scf ]
+  extends: [ .on_toss4_cpu_scf, .run_on_scf, .build_studyweaver_docs ]
+  artifacts:
+    paths:
+      - build_docs_dir/StudyWeaver
+
+build_weave_docs_push_to_SCF_develop_feature:
+  needs:
+    - job: build_ibis_docs_scf
+      artifacts: true
+    - job: build_kosh_docs_scf
+      artifacts: true
+    - job: build_maestrowf_docs_scf
+      artifacts: true
+    - job: build_merlin_docs_scf
+      artifacts: true
+    - job: build_pydv_docs_scf
+      artifacts: true
+    - job: build_sina_docs_scf
+      artifacts: true
+    - job: build_trata_docs_scf
+      artifacts: true
+    - job: build_studyweaver_docs_scf
+      artifacts: true
+  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_SCF_develop_feature, .build_weave_docs_push_to_SCF_develop_feature ]
   artifacts:
     paths:
       - docs
       - build_docs_dir
 
-build_weave_docs_push_to_zone_develop_scf:
-  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
-  dependencies: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
-  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_zone_develop_scf, .build_weave_docs_push_to_zone_scf ]
+build_weave_docs_push_to_SCF_develop:
+  needs:
+    - job: build_ibis_docs_scf
+      artifacts: true
+    - job: build_kosh_docs_scf
+      artifacts: true
+    - job: build_maestrowf_docs_scf
+      artifacts: true
+    - job: build_merlin_docs_scf
+      artifacts: true
+    - job: build_pydv_docs_scf
+      artifacts: true
+    - job: build_sina_docs_scf
+      artifacts: true
+    - job: build_trata_docs_scf
+      artifacts: true
+    - job: build_studyweaver_docs_scf
+      artifacts: true
+  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_SCF_develop, .build_weave_docs_push_to_SCF_develop ]
   artifacts:
     paths:
       - docs
       - build_docs_dir
 
 build_weave_docs_push_to_develop_feature_scf:
-  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
-  dependencies: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
-  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_develop_feature_scf, .build_weave_docs_push_to_target_feature_scf ]
+  needs:
+    - job: build_ibis_docs_scf
+      artifacts: true
+    - job: build_kosh_docs_scf
+      artifacts: true
+    - job: build_maestrowf_docs_scf
+      artifacts: true
+    - job: build_merlin_docs_scf
+      artifacts: true
+    - job: build_pydv_docs_scf
+      artifacts: true
+    - job: build_sina_docs_scf
+      artifacts: true
+    - job: build_trata_docs_scf
+      artifacts: true
+    - job: build_studyweaver_docs_scf
+      artifacts: true
+  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_develop_feature_scf, .build_weave_docs_push_to_develop_feature_scf ]
   artifacts:
     paths:
       - docs
       - build_docs_dir
 
 build_weave_docs_push_to_develop_scf:
-  needs: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
-  dependencies: [ build_ibis_docs_scf, build_kosh_docs_scf, build_maestrowf_docs_scf, build_merlin_docs_scf, build_pydv_docs_scf, build_sina_docs_scf, build_trata_docs_scf ]
-  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_develop_scf, .build_weave_docs_push_to_target_scf ]
+  needs:
+    - job: build_ibis_docs_scf
+      artifacts: true
+    - job: build_kosh_docs_scf
+      artifacts: true
+    - job: build_maestrowf_docs_scf
+      artifacts: true
+    - job: build_merlin_docs_scf
+      artifacts: true
+    - job: build_pydv_docs_scf
+      artifacts: true
+    - job: build_sina_docs_scf
+      artifacts: true
+    - job: build_trata_docs_scf
+      artifacts: true
+    - job: build_studyweaver_docs_scf
+      artifacts: true
+  extends: [ .on_toss4_cpu_scf, .run_on_scf, .merge_for_push_to_develop_scf, .build_weave_docs_push_to_develop_scf ]
   artifacts:
     paths:
       - docs
       - build_docs_dir
 
-#deploy_docs_scf:
-#  needs:
-#    - job: build_weave_docs_push_to_zone_develop_feature_scf
-#      optional: true
-#    - job: build_weave_docs_push_to_zone_develop_scf
-#      optional: true
-#    - job: build_weave_docs_push_to_develop_feature_scf
-#      optional: true
-#    - job: build_weave_docs_push_to_develop_scf
-#      optional: true
-#  extends: [ .on_toss4_cpu_scf, .run_on_scf, .deploy ]
-
 deploy_docs_scf:
   needs:
     - job: build_weave_docs_push_to_develop_scf
+      optional: false    
   extends: [ .on_toss4_cpu_scf, .run_on_scf, .do_deploy_scf, .deploy ]
